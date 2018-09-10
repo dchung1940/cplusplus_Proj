@@ -8,6 +8,7 @@
 
 using namespace cs225;
 
+
 /**
  * Returns an image that has been transformed to grayscale.
  *
@@ -33,7 +34,6 @@ PNG grayscale(PNG image) {
 }
 
 
-
 /**
  * Returns an image with a spotlight centered at (`centerX`, `centerY`).
  *
@@ -45,7 +45,7 @@ PNG grayscale(PNG image) {
  * is a total of `sqrt((3 * 3) + (4 * 4)) = sqrt(25) = 5` pixels away and
  * its luminance is decreased by 2.5% (0.975x its original value).  At a
  * distance over 160 pixels away, the luminance will always decreased by 80%.
- * 
+ *
  * The modified PNG is then returned.
  *
  * @param image A PNG object which holds the image data to be modified.
@@ -55,11 +55,25 @@ PNG grayscale(PNG image) {
  * @return The image with a spotlight.
  */
 PNG createSpotlight(PNG image, int centerX, int centerY) {
+  for (unsigned int x=0; x < image.width(); x++){
+    for(unsigned int y =0; y< image.height(); y++){
+      double z = sqrt((((int)x-centerX)*((int)x-centerX))+(((int)y-centerY)*((int)y-centerY)));
+      HSLAPixel & pixel = image.getPixel(x,y);
+      if (z < 160)
+      {
+      pixel.l = pixel.l*(1-.005*z);
+    }
+      else
+      {
+        pixel.l = pixel.l*.2;
+      }
+  }
+  }
 
   return image;
-  
+
 }
- 
+
 
 /**
  * Returns a image transformed to Illini colors.
@@ -72,10 +86,22 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
  * @return The illinify'd image.
 **/
 PNG illinify(PNG image) {
-
+  for (unsigned int x = 0; x < image.width(); x++) {
+    for (unsigned int y = 0; y < image.height(); y++){
+      HSLAPixel & pixel = image.getPixel(x,y);
+      if (pixel.h <113.5 || pixel.h>257.5)
+      {
+        pixel.h = 11;
+      }
+      else{
+        pixel.h = 216;
+      }
+    }
+    }
   return image;
 }
- 
+
+
 
 /**
 * Returns an immge that has been watermarked by another image.
@@ -90,6 +116,17 @@ PNG illinify(PNG image) {
 * @return The watermarked image.
 */
 PNG watermark(PNG firstImage, PNG secondImage) {
+  for (unsigned int x = 0; x < secondImage.width(); x++) {
+    for (unsigned int y = 0; y < secondImage.height(); y++){
+      HSLAPixel & pixel_two = secondImage.getPixel(x,y);
+      if (pixel_two.l == 1)
+      {
+        HSLAPixel & pixel_one = firstImage.getPixel(x,y);
+        pixel_one.l += .2;
+      }
+    }
+  }
+
 
   return firstImage;
 }
