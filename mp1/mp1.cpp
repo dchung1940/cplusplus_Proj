@@ -50,11 +50,21 @@ PNG myArt(unsigned int width, unsigned int height) {
   for (unsigned x = png.width()/2; x <png.width()/4*3; x++) {
     for (unsigned y = png.height()/2; y <png.height()/4*3; y++) {
       HSLAPixel & png_pixel = png.getPixel(x,y);
-      png_pixel.h = 200;
+      png_pixel.h = 116;
       png_pixel.s = .5;
       png_pixel.l = .5;
       png_pixel.a = .5;
     }
+  }
+  for (unsigned x = png.width()/2; x <png.width()/4*3; x++) {
+    for (unsigned y = png.height()/4; y <png.height()/2; y++) {
+        HSLAPixel & png_pixel = png.getPixel(x,y);
+        png_pixel.h = 296;
+        png_pixel.s = .5;
+        png_pixel.l = .5;
+        png_pixel.a = .5;
+      }
+
   }
   for (unsigned x = (png.width()/4)*3; x <png.width(); x++) {
     for (unsigned y = (png.height()/4)*3; y <png.height(); y++) {
