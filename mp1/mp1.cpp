@@ -31,7 +31,7 @@ PNG myArt(unsigned int width, unsigned int height) {
   for (unsigned x = 0; x <png.width()/4; x++) {
     for (unsigned y = 0; y <png.height()/4; y++) {
       HSLAPixel & png_pixel = png.getPixel(x,y);
-      png_pixel.h = 100;
+      png_pixel.h = 50;
       png_pixel.s = .2;
       png_pixel.l = .2;
       png_pixel.a = .2;
@@ -41,7 +41,7 @@ PNG myArt(unsigned int width, unsigned int height) {
   for (unsigned x = png.width()/4; x <png.width()/2; x++) {
     for (unsigned y = png.height()/4; y <png.height()/2; y++) {
       HSLAPixel & png_pixel = png.getPixel(x,y);
-      png_pixel.h = 300;
+      png_pixel.h = 125;
       png_pixel.s = .1;
       png_pixel.l = .1;
       png_pixel.a = .1;
