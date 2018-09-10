@@ -4,7 +4,23 @@
  * @author CS 225: Data Structures
  */
 
-#pragma once
+ #ifndef CS225_HSLAPIXEL_H_
+ #define CS225_HSLAPIXEL_H_
 
-namespace cs225 {
-}
+ #include <iostream>
+ #include <sstream>
+
+ namespace cs225 {
+   class HSLAPixel{
+     public:
+       double h;
+       double s;
+       double l;
+       double a;
+       HSLAPixel();
+       HSLAPixel (double h, double s, double l) ;
+       HSLAPixel (double h, double s, double l, double a);
+   };
+ }
+
+ #endif
