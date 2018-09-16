@@ -3,6 +3,7 @@
  */
 
 #include <iostream>
+#include <string>
 #include "room.h"
 
 Room::Room()
@@ -62,7 +63,7 @@ void Room::clear()
 {
     if (letters != NULL)
 
-        delete letters;
+        delete[] letters;
 }
 
 void Room::copy(const Room& other)
@@ -71,6 +72,9 @@ void Room::copy(const Room& other)
     capacity = other.capacity;
     count = other.count;
     letterCount = other.letterCount;
-    letters = other.letters;
-
+    letters = new Letter[max_letters];
+    for(int i =0; i<max_letters; i++)
+      {
+        letters[i] = other.letters[i];
+      }
 }
