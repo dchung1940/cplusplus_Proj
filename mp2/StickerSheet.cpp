@@ -1,4 +1,5 @@
 #include "StickerSheet.h"
+#include <iostream>
 
 StickerSheet::StickerSheet(const cs225::Image &picture, unsigned max_)
 {
@@ -32,32 +33,52 @@ void StickerSheet::changeMaxStickers (unsigned max_)
   cs225::Image ** array_image_max = new cs225::Image*[max_];
 if (max_ > max)
 {
-  for (unsigned i = 0; i<max; i++)
+  for (unsigned i = 0; i<max_; i++)
   {
+    if (i <max)
+    {
+    if(array_image[i] != NULL && i < max)
+    {
     xmax_[i] = x_array[i];
     ymax_[i] = y_array[i];
     array_image_max[i] = new cs225::Image;
     *array_image_max[i] = *array_image[i];
+    }
+    else{
+      array_image_max[i] = NULL;
+    }
   }
+  else{
+    array_image_max[i] = NULL;
+  }
+}
 }
 else
 {
   for (unsigned i=0; i<max_; i++)
   {
+    if(array_image[i] != NULL)
+    {
     xmax_[i] = x_array[i];
     ymax_[i] = y_array[i];
     array_image_max[i] = new cs225::Image;
     *array_image_max[i] = *array_image[i];
+    }
+    else{
+      array_image_max[i] = NULL;
+    }
   }
 }
 delete_();
 x_array=xmax_;
 y_array=ymax_;
 array_image = array_image_max;
+max = max_;
 }
 
 int StickerSheet::addSticker(cs225::Image & sticker, unsigned x, unsigned y)
 {
+
   int index = -1;
   for (unsigned i=0; i<max; i++)
   {
@@ -71,6 +92,9 @@ int StickerSheet::addSticker(cs225::Image & sticker, unsigned x, unsigned y)
       i = max;
     }
   }
+
+
+
   if (index == -1 )
   {
     return -1;
@@ -82,7 +106,7 @@ int StickerSheet::addSticker(cs225::Image & sticker, unsigned x, unsigned y)
 }
 
 bool StickerSheet::translate(unsigned index, unsigned x, unsigned y){
-if (index < max )
+if (index < max && array_image[index] != NULL)
 {
   x_array[index] = x;
   y_array[index] = y;
@@ -112,10 +136,42 @@ cs225::Image * StickerSheet::getSticker	(	unsigned 	index	)	const
 cs225::Image StickerSheet::render() const
 {
   cs225::Image pic = base_picture;
+
+  int x_diff = 0;
+  int y_diff = 0;
+  double factor =0;
+  for(unsigned i=0; i<max; i++)
+  {
+    if (array_image[i] !=NULL){
+      int xtemp = (*array_image[i]).width()+x_array[i] - base_picture.width();
+      int ytemp = (*array_image[i]).height()+y_array[i] - base_picture.height();
+      if(x_diff < xtemp)
+      {
+        x_diff = xtemp;
+      }
+      if(y_diff < ytemp)
+      {
+        y_diff = ytemp;
+      }
+    }
+  }
+
+
+  if(x_diff>y_diff)
+  {
+    factor = double((x_diff + base_picture.width()))/base_picture.width();
+  }
+  else
+  {
+    factor = double((y_diff + base_picture.height()))/base_picture.height();
+  }
+pic.scale(factor);
+
+
+
   for(unsigned i = 0; i<max; i++)
   {
-    if(array_image[i] != NULL)
-    {
+    if(array_image[i] != NULL){
     unsigned x_val = x_array[i];
     unsigned y_val = y_array[i];
     cs225::Image sticker = *array_image[i];
@@ -125,7 +181,7 @@ cs225::Image StickerSheet::render() const
     // if (y_val +sticker.height()>pic.height())
     // {
     //   pic.scale(pic.width(),y_val+sticker.height());
-    // }
+    //  }
 
 
 
@@ -139,10 +195,10 @@ cs225::Image StickerSheet::render() const
             base_pixel.l = sticker_pixel.l;
             base_pixel.a = sticker_pixel.a;
           }
+        }
       }
     }
   }
-}
   return pic;
 }
 
