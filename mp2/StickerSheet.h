@@ -15,7 +15,9 @@
    bool translate (unsigned index, unsigned x, unsigned y);
    void removeSticker (unsigned index);
    cs225::Image * getSticker (unsigned index) const;
-   // Image render() const
+   void copy_(const StickerSheet & other);
+   void delete_();
+   cs225::Image render() const;
    ~StickerSheet();
 
 
@@ -23,4 +25,5 @@
    cs225::Image ** array_image;
    unsigned *x_array;
    unsigned *y_array;
+   cs225::Image base_picture;
  };
