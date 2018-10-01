@@ -163,28 +163,43 @@ template <typename T>
 bool verifySame(stack<T>& s, queue<T>& q)
 {
     bool retval = true; // optional
-    //  T temp1;
-    //  T temp2;
-    //  if (s.size() ==1)
-    //  {
-    //    if (q.front() != s.top())
-    //    {
-    //      retval = false;
-    //      return retval;
-    //    }
-    //    q.add(q.front());
-    //    q.pop();
-    //    return retval;
-    //  }
-    //  else{
-    //    temp 1 = s.top()
-    //    s.pop();
-    //    if (verifySame(s,q) == false)
-    //    {
-    //      return false;
-    //    }
-    //    else if(temp1 == )
-    // }
+     T temp1;
+     T temp2;
+     if (s.size() ==1)
+     {
+       if (q.front() != s.top())
+       {
+         retval = false;
+         return retval;
+       }
+       q.push(q.front());
+       q.pop();
+       return retval;
+     }
+     else{
+       temp1 = s.top();
+       s.pop();
+
+       if(verifySame(s,q) == false)
+       {
+         temp2 = q.front();
+         s.push(temp1);
+         q.push(temp2);
+         q.pop();
+         return false;
+       }
+       else
+       {
+         temp2 = q.front();
+         s.push(temp1);
+         q.push(temp2);
+         q.pop();
+         if(temp1 ==temp2)
+          return true;
+        else
+          return false;
+       }
+    }
     // Your code here
 
 
