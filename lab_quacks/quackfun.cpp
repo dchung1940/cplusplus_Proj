@@ -25,16 +25,26 @@ namespace QuackFun {
 template <typename T>
 T sum(stack<T>& s)
 {
-
+  if(s.size() == 0)
+  {
+    return 0;
+  }
+  else{
+  T a = s.top();
+  s.pop();
+  T b = a + sum(s);
+  s.push(a);
+  return b;
+  };
     // Your code here
-    return T(); // stub return value (0 for primitive types). Change this!
+     // stub return value (0 for primitive types). Change this!
                 // Note: T() is the default value for objects, and 0 for
                 // primitive types
 }
 
 /**
- * Checks whether the given string (stored in a queue) has balanced brackets. 
- * A string will consist of 
+ * Checks whether the given string (stored in a queue) has balanced brackets.
+ * A string will consist of
  * square bracket characters, [, ], and other characters. This function will return
  * true if and only if the square bracket characters in the given
  * string are balanced. For this to be true,
@@ -51,9 +61,34 @@ T sum(stack<T>& s)
  */
 bool isBalanced(queue<char> input)
 {
-
-    // @TODO: Make less optimistic
-    return true;
+    stack<char> s;
+    while(!input.empty())
+    {
+      if (input.front() != '[' && input.front() != ']')
+      {
+        input.pop();
+        continue;
+      }
+      if (input.front() == '[')
+      {
+        s.push('[');
+        input.pop();
+        continue;
+      }
+      if (s.empty())
+      {
+        return false;
+      }
+      if (input.front() == ']')
+      {
+        s.pop();
+        input.pop();
+      }
+    }
+    if (s.empty())
+      return true;
+    else
+      return false;
 }
 
 /**
@@ -72,9 +107,41 @@ template <typename T>
 void scramble(queue<T>& q)
 {
     stack<T> s;
+    int n =1;
+    unsigned count=0;
+    unsigned numb = q.size();
     // optional: queue<T> q2;
+  while(count < numb){
+    for(int j=0; j<n; j++)
+    {
 
-    // Your code here
+      if(count<numb)
+      {
+        count++;
+        if(n%2 ==1)
+        {
+          q.push(q.front());
+          q.pop();
+        }
+        else
+        {
+          s.push(q.front());
+          q.pop();
+        }
+
+      }
+      else{
+        break;
+      }
+    }
+    while(!s.empty())
+    {
+      q.push(s.top());
+      s.pop();
+    }
+      n++;
+    }
+  // Your code here
 }
 
 /**
@@ -96,10 +163,30 @@ template <typename T>
 bool verifySame(stack<T>& s, queue<T>& q)
 {
     bool retval = true; // optional
-    // T temp1; // rename me
-    // T temp2; // rename :)
-
+    //  T temp1;
+    //  T temp2;
+    //  if (s.size() ==1)
+    //  {
+    //    if (q.front() != s.top())
+    //    {
+    //      retval = false;
+    //      return retval;
+    //    }
+    //    q.add(q.front());
+    //    q.pop();
+    //    return retval;
+    //  }
+    //  else{
+    //    temp 1 = s.top()
+    //    s.pop();
+    //    if (verifySame(s,q) == false)
+    //    {
+    //      return false;
+    //    }
+    //    else if(temp1 == )
+    // }
     // Your code here
+
 
     return retval;
 }
