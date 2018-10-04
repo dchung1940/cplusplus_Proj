@@ -2,7 +2,7 @@
  * @file list.cpp
  * Doubly Linked List (MP 3).
  */
-
+#include <iostream>
 
 /**
  * Returns a ListIterator with a position at the beginning of
@@ -12,7 +12,7 @@ template <typename T>
 typename List<T>::ListIterator List<T>::begin() const {
   // : graded in MP3.1
 
-  return ListIterator(head_);
+  return List<T>::ListIterator(head_);
 }
 
 /**
@@ -20,7 +20,7 @@ typename List<T>::ListIterator List<T>::begin() const {
  */
 template <typename T>
 typename List<T>::ListIterator List<T>::end() const {
-  return ListIterator(tail_->next);
+  return List<T>::ListIterator(tail_->next);
 }
 
 /**
@@ -46,7 +46,9 @@ void List<T>::_destroy() {
     ListNode* temp = node;
     node = node->next;
     delete (temp);
+    temp = nullptr;
   }
+  tail_ = nullptr;
 }
 
 /**
@@ -70,6 +72,8 @@ else{
   ListNode * node = new ListNode(ndata);
   node->next = head_;
   node ->prev = nullptr;
+  head_ ->prev = node;
+  head_ = node;
   length_+=1;
 }
 }
@@ -95,6 +99,8 @@ else{
   ListNode * node = new ListNode(ndata);
   node->next = nullptr;
   node ->prev = tail_;
+  tail_->next = node;
+  tail_ = node;
   length_+=1;
 }
 
@@ -121,22 +127,66 @@ void List<T>::reverse() {
  */
 template <typename T>
 void List<T>::reverse(ListNode *& startPoint, ListNode *& endPoint) {
-  // / @todo Graded in MP3.1
-  ListNode * temp = startPoint;
-  startPoint = endPoint;
-  endPoint = temp;
-  ListNode * node = startPoint;
-  while(node != endPoint)
+
+ListNode * node = startPoint;
+ListNode * next = nullptr;
+ListNode * previous = startPoint->prev;
+ListNode * edge = endPoint -> next;
+if(startPoint == head_ && endPoint == tail_)
+{
+  while(node != edge)
   {
-    ListNode *var = node->next;
-    node ->next = node->prev;
-    node->prev = var;
-    node = node ->next;
+    next = node ->next;
+    node->next = previous;
+    previous = node;
+    node = next;
   }
-  endPoint ->prev = endPoint ->next;
-  endPoint -> next = nullptr;
+  endPoint = startPoint;
+  startPoint = previous;
+  head_ = startPoint;
+  tail_ = endPoint;
+}
+else if (startPoint == head_)
+{
+  while(node != edge)
+  {
+    next = node ->next;
+    node->next = previous;
+    previous = node;
+    node = next;
+  }
+  endPoint = startPoint;
+  startPoint = previous;
+  head_ = startPoint;
+}
+else if (endPoint == tail_)
+{
+  while(node != edge)
+  {
+    next = node ->next;
+    node->next = previous;
+    previous = node;
+    node = next;
+  }
+  endPoint = startPoint;
+  startPoint = previous;
+  tail_ = endPoint;
+}
+else{
+while(node != edge)
+{
+  next = node ->next;
+  node->next = previous;
+  previous = node;
+  node = next;
+}
+endPoint = startPoint;
+startPoint = previous;
 
 }
+
+}
+
 
 /**
  * Reverses blocks of size n in the current List. You should use your
@@ -147,12 +197,22 @@ void List<T>::reverse(ListNode *& startPoint, ListNode *& endPoint) {
 template <typename T>
 void List<T>::reverseNth(int n) {
   /// @todo Graded in MP3.1
-  ListNode * start = head_;
-  ListNode * node = head_;
-  ListNode * last;
+  ListNode * startPoint = head_;
+  ListNode * node = startPoint;
+  while(node != nullptr)
+  {
   for (int i=0; i<n; i++)
   {
     node = node->next;
+    if (node == nullptr)
+    {
+      break;
+    }
+  }
+  ListNode *endPoint = node->prev;
+  reverse(startPoint,endPoint);
+  node->prev = startPoint;
+  startPoint = node;
   }
 }
 
@@ -167,17 +227,39 @@ void List<T>::reverseNth(int n) {
  */
 template <typename T>
 void List<T>::waterfall() {
-  ListNode *curr = head_;
-  while (curr != tail_)
+  if(!head_)
   {
-    ListNode *temp = curr ->next;
-    curr->next = temp->next;
-    curr->next->prev = curr;
+    return;
+  }
+  else{
+  ListNode *curr = head_;
+  while (curr ->next != NULL)
+  {
+    ListNode *temp = curr->next;
+    ListNode *temp_one = temp ->next;
+
+    curr ->next = temp_one;
+
+    if (temp_one != nullptr) {
+      temp_one ->prev = curr;
+    }
+    else{
+      return;
+    }
     tail_ ->next = temp;
-    temp -> next = nullptr;
+
+    temp ->prev = tail_;
+
+    temp ->next = nullptr;
+
     tail_ = temp;
     curr = curr->next;
+    if(curr ->next == tail_)
+    {
+      return;
+    }
   }
+}
   /// @todo Graded in MP3.1
 }
 
