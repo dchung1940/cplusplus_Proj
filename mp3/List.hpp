@@ -111,7 +111,7 @@ else{
  */
 template <typename T>
 void List<T>::reverse() {
-  reverse(head_, tail_);
+  reverse(head_, tail_ );
 }
 
 /**
@@ -131,6 +131,7 @@ void List<T>::reverse(ListNode *& startPoint, ListNode *& endPoint) {
 ListNode * node = startPoint;
 ListNode * next = nullptr;
 ListNode * previous = startPoint->prev;
+ListNode * first_num = startPoint->prev;
 ListNode * edge = endPoint -> next;
 if(startPoint == head_ && endPoint == tail_)
 {
@@ -143,6 +144,16 @@ if(startPoint == head_ && endPoint == tail_)
   }
   endPoint = startPoint;
   startPoint = previous;
+  // std::cout << "1"<<std::endl;
+  endPoint -> next = edge;
+  if(edge!= nullptr)
+  {edge->prev = endPoint;}
+  // std::cout << "2"<<std::endl;
+  if(first_num != nullptr)
+  {first_num ->next= startPoint;}
+  // std::cout << "3"<<std::endl;
+  startPoint->prev= first_num;
+  // std::cout << "4"<<std::endl;
   head_ = startPoint;
   tail_ = endPoint;
 }
@@ -157,6 +168,17 @@ else if (startPoint == head_)
   }
   endPoint = startPoint;
   startPoint = previous;
+  endPoint -> next = edge;
+  // std::cout << "1"<<std::endl;
+  if(edge!= nullptr)
+  {edge->prev = endPoint;}
+  // std::cout << "2"<<std::endl;
+  if(first_num != nullptr)
+  {first_num ->next= startPoint;}
+  // std::cout << "3"<<std::endl;
+  startPoint->prev= first_num;
+  // std::cout << "4"<<std::endl;
+
   head_ = startPoint;
 }
 else if (endPoint == tail_)
@@ -170,6 +192,18 @@ else if (endPoint == tail_)
   }
   endPoint = startPoint;
   startPoint = previous;
+  // std::cout << "1"<<std::endl;
+  endPoint -> next = edge;
+  // std::cout << "2"<<std::endl;
+  if(edge!= nullptr)
+  {edge->prev = endPoint;}
+  // std::cout << "3"<<std::endl;
+  if(first_num != nullptr)
+  {first_num ->next= startPoint;}
+  // std::cout << "4"<<std::endl;
+
+  startPoint->prev= first_num;
+
   tail_ = endPoint;
 }
 else{
@@ -182,6 +216,13 @@ while(node != edge)
 }
 endPoint = startPoint;
 startPoint = previous;
+// std::cout << "0"<<std::endl;
+endPoint -> next = edge;
+// std::cout << "1"<<std::endl;
+{edge->prev = endPoint;}
+if(first_num != nullptr)
+{first_num ->next= startPoint;}
+startPoint->prev= first_num;
 
 }
 
@@ -199,20 +240,21 @@ void List<T>::reverseNth(int n) {
   /// @todo Graded in MP3.1
   ListNode * startPoint = head_;
   ListNode * node = startPoint;
-  while(node != nullptr)
+  while(startPoint != nullptr)
   {
-  for (int i=0; i<n; i++)
+    node = startPoint;
+  for (int i=1; i<n; i++)
   {
-    node = node->next;
-    if (node == nullptr)
-    {
-      break;
+    if (node->next != nullptr) {
+      node = node->next;
     }
   }
-  ListNode *endPoint = node->prev;
+  ListNode *endPoint = node;
+  //ListNode *nextIteration = endPoint->next;
+  // std::cout << "ok" << std::endl;
   reverse(startPoint,endPoint);
-  node->prev = startPoint;
-  startPoint = node;
+  // std::cout << "1" << std::endl;
+  startPoint = endPoint->next;
   }
 }
 

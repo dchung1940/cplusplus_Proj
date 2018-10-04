@@ -143,10 +143,10 @@ TEST_CASE("List::reversePartial", "[weight=5][part=1]") {
   list.insertBack(5);
   list.insertBack(6);
 
-  std::cout << list << std::endl;
+  //std::cout << list << std::endl;
   list.reverse();
 
-  std::cout << list << std::endl;
+  //std::cout << list << std::endl;
 }
 
 TEST_CASE("List::waterfalllol", "[weight=5][part=1]") {
@@ -161,10 +161,10 @@ TEST_CASE("List::waterfalllol", "[weight=5][part=1]") {
   list.insertBack(8);
 
 
-  std::cout << list << std::endl;
+  //std::cout << list << std::endl;
   list.waterfall();
 
-  std::cout << list << std::endl;
+  //std::cout << list << std::endl;
 }
 
 TEST_CASE("List::reverseNth #1", "[weight=5][part=1]") {
@@ -204,7 +204,7 @@ TEST_CASE("List::waterfall", "[weight=10][part=1]") {
   PNG out = listToImage(list, in.width(), in.height());
   out.writeToFile("actual-waterfall.png");
   INFO("Output image `out` saved as actual-waterfall.png");
-  list.print(std::cout);
+  // list.print(std::cout);
 
   REQUIRE( out == expected );
 }
