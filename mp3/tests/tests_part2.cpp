@@ -96,11 +96,33 @@ TEST_CASE("List::merge", "[weight=10][part=2]") {
           x++;
   }
 
+
+
   out.writeToFile("actual-merge.png");
   INFO("Output image `out` saved as actual-merge.png");
 
   REQUIRE( out == expected );
 }
+
+TEST_CASE("List::merge2", "[weight=10][part=2]") {
+    List<unsigned> list1,list2,list3;
+    list1.insertBack(2);
+    list2.insertBack(1);
+    list1.insertBack(2);
+    list2.insertBack(1);
+    list1.insertBack(2);
+    list2.insertBack(3);
+    list1.insertBack(2);
+    list2.insertBack(4);
+
+
+    std::cout << list1 << std::endl;
+    std::cout << list2 << std::endl;
+
+    list1.mergeWith(list2);
+    // List<unsigned> merged(list1, list2);
+    std::cout << list1 << std::endl;
+  }
 
 TEST_CASE("List::sort #1", "[weight=5][part=2]") {
   PNG expected;  expected.readFromFile("tests/expected-sort_1.png");

@@ -143,10 +143,10 @@ TEST_CASE("List::reversePartial", "[weight=5][part=1]") {
   list.insertBack(5);
   list.insertBack(6);
 
-  //std::cout << list << std::endl;
+  std::cout << list << std::endl;
   list.reverse();
 
-  //std::cout << list << std::endl;
+  std::cout << list << std::endl;
 }
 
 TEST_CASE("List::waterfalllol", "[weight=5][part=1]") {

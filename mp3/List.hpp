@@ -125,6 +125,7 @@ void List<T>::reverse() {
  * @param endPoint A pointer reference to the last node in the sequence to
  *  be reversed.
  */
+ //Referenced from GeeksforGeek for reversing
 template <typename T>
 void List<T>::reverse(ListNode *& startPoint, ListNode *& endPoint) {
 
@@ -363,7 +364,25 @@ List<T> List<T>::split(int splitPoint) {
 template <typename T>
 typename List<T>::ListNode * List<T>::split(ListNode * start, int splitPoint) {
   /// @todo Graded in MP3.2
-  return NULL;
+  ListNode* head_ptr = start;
+  ListNode* new_head = nullptr;
+  if(!start)
+  {
+    return nullptr;
+  }
+  if(splitPoint <1)
+  {
+    return nullptr;
+  }
+  for(int i=0; i<splitPoint-1; i++)
+  {
+    if(start != nullptr)
+    start = start->next;
+  }
+  new_head = start->next;
+  start->next = nullptr;
+  new_head -> prev = nullptr;
+  return new_head;
 }
 
 /**
@@ -404,8 +423,62 @@ void List<T>::mergeWith(List<T> & otherList) {
 template <typename T>
 typename List<T>::ListNode * List<T>::merge(ListNode * first, ListNode* second) {
   /// @todo Graded in MP3.2
-  return NULL;
+  if(first == nullptr && second == nullptr)
+  {
+    return nullptr;
+  }
+  else if (first == nullptr)
+  {
+    return second;
+  }
+  else if (second == nullptr)
+  {
+    return first;
+  }
+  else
+  {
+    ListNode *greater = second;
+    ListNode *prev_one = nullptr;
+    ListNode *node = first;
+    if(second->data < first->data)
+    {
+      node = second;
+      greater = first;
+    }
+    ListNode* head_ptr = node;
+    while(node != nullptr)
+    {
+      if(node->data < greater->data)
+      {
+        prev_one = node;
+        node = node->next;
+      }
+      else if (node ->data == greater ->data)
+      {
+        prev_one = node;
+        node = node->next;
+      }
+      else
+      {
+        ListNode* temp = nullptr;
+        prev_one ->next = greater;
+        greater->prev = prev_one;
+        temp = node;
+        node = greater;
+        greater = temp;
+        prev_one = node;
+        node = node->next;
+      }
+    }
+    if(greater!=nullptr && node == nullptr)
+    {
+      prev_one ->next = greater;
+      greater->prev = prev_one;
+      }
+    return head_ptr;
+  }
 }
+
 
 /**
  * Sorts the current list by applying the Mergesort algorithm.
@@ -431,6 +504,15 @@ void List<T>::sort() {
  */
 template <typename T>
 typename List<T>::ListNode* List<T>::mergesort(ListNode * start, int chainLength) {
-  /// @todo Graded in MP3.2
-  return NULL;
+  // @todo Graded in MP3.2
+  ListNode* new_head;
+  if(chainLength == 1)
+    return start;
+  else{
+    new_head = split(start,chainLength/2);
+    ListNode* first = mergesort(start, chainLength-chainLength/2);
+    ListNode* second = mergesort(new_head, chainLength/2);
+    merge(first,second);
+  }
+  return start;
 }
