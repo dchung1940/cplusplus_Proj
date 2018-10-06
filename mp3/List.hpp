@@ -506,29 +506,27 @@ template <typename T>
 typename List<T>::ListNode* List<T>::mergesort(ListNode * start, int chainLength) {
   // @todo Graded in MP3.2
   ListNode* new_head;
-
-  ListNode* temp;
+  // head_ = start;
+  // ListNode* temp;
   if(chainLength == 1)
     return start;
   else{
     new_head = split(start,chainLength/2);
     // std::cout<<new_head ->data<<std::endl;
     // std::cout<<"new_head!"<<std::endl;
-    ListNode*& first =mergesort(start, chainLength/2);
-    ListNode*& second =mergesort(new_head, chainLength-chainLength/2);
-    
+    ListNode* first =mergesort(start, chainLength/2);
+
     // std::cout<<first ->data<<std::endl;
     // std::cout<<"first"<<std::endl;
+    ListNode* second =mergesort(new_head, chainLength-chainLength/2);
     // std::cout<<second ->data<<std::endl;
     // std::cout<<"second"<<std::endl;
-    temp =merge(first,second);
-    while(temp != NULL){
-      std::cout<<temp->data<<std::endl;
-      temp = temp->next;
-      }
-    std::cout<<"break"<<std::endl;
+    return merge(first,second);
+    // while(temp != NULL){
+    //   std::cout<<temp->data<<std::endl;
+    //   temp = temp->next;
+    //   }
+    // std::cout<<"break"<<std::endl;
 
   }
-
-  return start;
 }

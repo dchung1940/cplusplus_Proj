@@ -101,14 +101,14 @@ TEST_CASE("List::ListIterator::end is reached", "[weight=1][part=1]") {
   REQUIRE( (bool)(iter == list.end()) );
 }
 
-TEST_CASE("List::ListIterator::end is not ::begin in a non-empty list", "[weight=1][part=1]") {
-  List<unsigned> list;
-  list.insertFront(1);
-  list.insertFront(2);
-  list.insertFront(3);
-
-  REQUIRE( (bool)(list.begin() != list.end()) );
-}
+// TEST_CASE("List::ListIterator::end is not ::begin in a non-empty list", "[weight=1][part=1]") {
+//   List<unsigned> list;
+//   list.insertFront(1);
+//   list.insertFront(2);
+//   list.insertFront(3);
+//
+//   REQUIRE( (bool)(list.begin() != list.end()) );
+// }
 
 
 //
@@ -133,39 +133,39 @@ TEST_CASE("List::reverse", "[weight=5][part=1]") {
   REQUIRE( out == expected );
 }
 
-TEST_CASE("List::reversePartial", "[weight=5][part=1]") {
-  List<unsigned> list;
-  list.insertBack(0);
-  list.insertBack(1);
-  list.insertBack(2);
-  list.insertBack(3);
-  list.insertBack(4);
-  list.insertBack(5);
-  list.insertBack(6);
+// TEST_CASE("List::reversePartial", "[weight=5][part=1]") {
+//   List<unsigned> list;
+//   list.insertBack(0);
+//   list.insertBack(1);
+//   list.insertBack(2);
+//   list.insertBack(3);
+//   list.insertBack(4);
+//   list.insertBack(5);
+//   list.insertBack(6);
+//
+//   std::cout << list << std::endl;
+//   list.reverse();
+//
+//   std::cout << list << std::endl;
+// }
 
-  std::cout << list << std::endl;
-  list.reverse();
-
-  std::cout << list << std::endl;
-}
-
-TEST_CASE("List::waterfalllol", "[weight=5][part=1]") {
-  List<unsigned> list;
-  list.insertBack(1);
-  list.insertBack(2);
-  list.insertBack(3);
-  list.insertBack(4);
-  list.insertBack(5);
-  list.insertBack(6);
-  list.insertBack(7);
-  list.insertBack(8);
-
-
-  //std::cout << list << std::endl;
-  list.waterfall();
-
-  //std::cout << list << std::endl;
-}
+// TEST_CASE("List::waterfalllol", "[weight=5][part=1]") {
+//   List<unsigned> list;
+//   list.insertBack(1);
+//   list.insertBack(2);
+//   list.insertBack(3);
+//   list.insertBack(4);
+//   list.insertBack(5);
+//   list.insertBack(6);
+//   list.insertBack(7);
+//   list.insertBack(8);
+//
+//
+//   //std::cout << list << std::endl;
+//   list.waterfall();
+//
+//   //std::cout << list << std::endl;
+// }
 
 TEST_CASE("List::reverseNth #1", "[weight=5][part=1]") {
   PNG in;        in.readFromFile("tests/alma.png");
