@@ -104,24 +104,44 @@ TEST_CASE("List::merge", "[weight=10][part=2]") {
   REQUIRE( out == expected );
 }
 
+TEST_CASE("List::split2", "[weight=10][part=2]") {
+    List<unsigned> list1,list2,list3,list4,list5;
+    list1.insertBack(1);
+    list1.insertBack(2);
+    // list1.insertBack(3);
+    // list1.insertBack(4);
+    // list1.insertBack(5);
+    // list2.insertBack(6);
+    // list1.insertBack(7);
+    // list2.insertBack(8);
+
+    std::cout<<list1<<std::endl;
+    list2 = list1.split(1);
+    std::cout<<list1<<std::endl;
+    std::cout<<list2<<std::endl;
+  }
+
 TEST_CASE("List::merge2", "[weight=10][part=2]") {
-    List<unsigned> list1,list2,list3;
-    list1.insertBack(2);
-    list2.insertBack(1);
-    list1.insertBack(2);
-    list2.insertBack(1);
-    list1.insertBack(2);
+    List<unsigned> list1,list2,list3,list4,list5;
+    list1.insertBack(1);
+    list1.insertBack(4);
+    list2.insertBack(2);
     list2.insertBack(3);
-    list1.insertBack(2);
-    list2.insertBack(4);
+
+    // list3.insertBack(4);
+    // list4.insertBack(3);
+    // list1.insertBack(2);
+    // list2.insertBack(3);
+    // list1.insertBack(2);
+    // list2.insertBack(4);
 
 
-    std::cout << list1 << std::endl;
-    std::cout << list2 << std::endl;
-
+    std::cout<<list1<<std::endl;
+    std::cout<<list2<<std::endl;
     list1.mergeWith(list2);
+    std::cout<<list1<<std::endl;
     // List<unsigned> merged(list1, list2);
-    std::cout << list1 << std::endl;
+
   }
 
 TEST_CASE("List::sort #1", "[weight=5][part=2]") {
@@ -169,3 +189,25 @@ TEST_CASE("List::sort #2", "[weight=5][part=2]") {
 
   REQUIRE( b3 == expected );
 }
+
+TEST_CASE("List::sort_two", "[weight=5][part=2]") {
+    List<unsigned> list1,list2,list3;
+    list1.insertBack(1);
+    list1.insertBack(2);
+    list1.insertBack(3);
+    list1.insertBack(4);
+    // list1.insertBack(6);
+    // list1.insertBack(9);
+    // list1.insertBack(8);
+    // list1.insertBack(7);
+
+
+
+
+
+    std::cout << list1 << std::endl;
+
+    list1.sort();
+    // List<unsigned> merged(list1, list2);
+    std::cout << list1 << std::endl;
+  }
