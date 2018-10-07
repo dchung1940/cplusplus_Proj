@@ -11,6 +11,9 @@
 #include <vector>
 #include <sstream>
 #include "random.h"
+#include <stack>
+using std::stack;
+
 using namespace std;
 
 /**
@@ -89,7 +92,7 @@ class BinaryTree
         /**
          * @return The root of the binary tree
          */
-        Node* getRoot() const;  
+        Node* getRoot() const;
 
         /**
          * This lab deals with the following six helper functions:
@@ -218,6 +221,14 @@ class BinaryTree
          * @param treeVector stores nodes in order
          */
         void inOrder(Node *subRoot, vector<T>& treeVector);
+
+        void mirror( Node* subRoot) const;
+        bool isOrderedIterative(const Node *root) const;
+
+        bool isOrderedRecursive(const Node *root) const;
+
+
+
 };
 
 #include "binarytree_given.cpp"
