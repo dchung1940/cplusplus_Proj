@@ -223,7 +223,7 @@ class BinaryTree
         void inOrder(Node *subRoot, vector<T>& treeVector);
 
         void mirror( Node* subRoot) const;
-        bool isOrderedIterative(const Node *root) const;
+        bool Iterative(const Node *root) const;
 
         bool isOrderedRecursive(const Node *root) const;
 

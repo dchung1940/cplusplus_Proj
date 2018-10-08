@@ -130,7 +130,7 @@ bool BinaryTree<T>::isOrderedIterative() const
 
 
 // template <typename T>
-// bool BinaryTree<T>::isOrderedIterative(const Node *root) const
+// bool BinaryTree<T>::Iterative(const Node *root) const
 // {
 //   stack< Node *> stack;
 //   int curr_elem;

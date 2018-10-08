@@ -11,14 +11,22 @@ double AbstractSyntaxTree::eval() const {
 
 double AbstractSyntaxTree::eval(Node * root) const{
     if(!root){
-      return -1;
+      return 0;
     }
     if (!root->left && !root->right){
       return std::stod(root->elem);
     }
-    double y = eval(root->right);
-    double x = eval(root->left);
-    string optr = root->elem;
-    string result = std::to_string(x)+optr+std::to_string(y);
-    return std::stod(result);
-}
+    if (root->elem == "+"){
+      return eval(root->left) + eval(root->right);
+    }
+    else if (root->elem == "-"){
+      return eval(root->left)-eval(root->right);
+    }
+    else if (root->elem == "*"){
+      return eval(root->left) * eval(root->right);
+    }
+    else if (root->elem == "/"){
+      return eval(root->left) / eval(root->right);
+    }
+    return 0;
+  }
