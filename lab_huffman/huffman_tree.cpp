@@ -86,7 +86,34 @@ HuffmanTree::removeSmallest(queue<TreeNode*>& singleQueue,
      * smaller of the two queues heads is the smallest item in either of
      * the queues. Return this item after removing it from its queue.
      */
-    return NULL;
+     if(singleQueue.empty() && mergeQueue.empty())
+      return NULL;
+     else if (singleQueue.empty())
+      {
+        TreeNode* temp = mergeQueue.front();
+        mergeQueue.pop();
+        return temp;
+      }
+    else if (mergeQueue.empty())
+    {
+      TreeNode* temp = singleQueue.front();
+      singleQueue.pop();
+      return temp;
+    }
+    else{
+     if(singleQueue.front()->freq.getFrequency() > mergeQueue.front()->freq.getFrequency())
+     {
+       TreeNode* temp = mergeQueue.front();
+       mergeQueue.pop();
+       return temp;
+     }
+     else
+     {
+       TreeNode* temp = singleQueue.front();
+       singleQueue.pop();
+       return temp;
+     }
+   }
 }
 
 void HuffmanTree::buildTree(const vector<Frequency>& frequencies)
@@ -111,7 +138,36 @@ void HuffmanTree::buildTree(const vector<Frequency>& frequencies)
      * Finally, when there is a single node left, it is the root. Assign it
      * to the root and you're done!
      */
+     for (auto i = frequencies.begin(); i != frequencies.end(); ++i)
+     {
+       TreeNode *node = new TreeNode(*i);
+       singleQueue.push(node);
+     }
+     // for (int i = 0; i < frequencies.size(); i++)
+     // {
+     //   TreeNode *node = new TreeNOde(frequencies.)
+     // }
+     while ((singleQueue.size()+mergeQueue.size())!=1)
+     {
 
+       TreeNode *first = removeSmallest(singleQueue,mergeQueue);
+       TreeNode *second = removeSmallest(singleQueue,mergeQueue);
+       int temp = first->freq.getFrequency() + second->freq.getFrequency();
+       TreeNode *parent = new TreeNode(temp);
+       parent->left = first;
+       parent->right = second;
+       mergeQueue.push(parent);
+     }
+     if(singleQueue.size() == 0)
+     {
+       root_ = mergeQueue.front();
+
+     }
+     else
+     {
+       root_ = singleQueue.front();
+
+     }
 }
 
 string HuffmanTree::decodeFile(BinaryFileReader& bfile)
@@ -136,7 +192,25 @@ void HuffmanTree::decode(stringstream& ss, BinaryFileReader& bfile)
          * character to the stringstream (with operator<<, just like cout)
          * and start traversing from the root node again.
          */
+         if (current->left == nullptr && current ->right == nullptr)
+         {
+           ss << current->freq.getCharacter();
+           current = root_;
+         }
+         else
+         {
+        bool flag = bfile.getNextBit();
+         if (flag == 0)
+         {
+           current = current->left;
+         }
+         else if (flag == 1)
+         {
+           current = current->right;
+         }
+       }
     }
+    ss<<current->freq.getCharacter();
 }
 
 void HuffmanTree::writeTree(BinaryFileWriter& bfile)
@@ -161,6 +235,18 @@ void HuffmanTree::writeTree(TreeNode* current, BinaryFileWriter& bfile)
      * version: this is fine, as the structure of the tree still reflects
      * what the relative frequencies were.
      */
+     if (current->left == nullptr && current->right == nullptr)
+     {
+      bfile.writeBit(1);
+      bfile.writeByte(current->freq.getCharacter());
+      return;
+     }
+     else
+     {
+       bfile.writeBit(0);
+       writeTree(current->left, bfile);
+       writeTree(current->right,bfile);
+     }
 }
 
 HuffmanTree::TreeNode* HuffmanTree::readTree(BinaryFileReader& bfile)
@@ -181,8 +267,27 @@ HuffmanTree::TreeNode* HuffmanTree::readTree(BinaryFileReader& bfile)
      *      4. Your function should return the TreeNode it creates, or NULL
      *         if it did not create one.
      */
+bool temp = bfile.getNextBit();
+if (bfile.hasBits() == false)
+{
+   return nullptr;
+}
+if (temp == 1)
+{
+  TreeNode* current = new TreeNode(Frequency(bfile.getNextByte(),0));
+  return current;
+}
 
-    return NULL;
+if (temp == 0)
+{
+  TreeNode* current = new TreeNode(0);
+  current->left = readTree(bfile);
+  current->right = readTree(bfile);
+  return current;
+}
+return nullptr;
+
+
 }
 
 void HuffmanTree::buildMap(TreeNode* current, vector<bool>& path)

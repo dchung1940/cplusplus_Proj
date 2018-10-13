@@ -12,7 +12,6 @@
 #include <sstream>
 #include "random.h"
 #include <stack>
-using std::stack;
 
 using namespace std;
 

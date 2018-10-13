@@ -6,7 +6,6 @@
 #include "TreeTraversals/InorderTraversal.h"
 #include <iostream>
 #include <stack>
-using std::stack;
 /**
  * @return The height of the binary tree. Recall that the height of a binary
  *  tree is just the length of the longest path from the root to a leaf, and
@@ -125,38 +124,40 @@ bool BinaryTree<T>::isOrderedIterative() const
 {
     // your code here
     // return isOrderedIterative(root);
+    // return Iterative(root);
     return false;
 }
 
 
-// template <typename T>
-// bool BinaryTree<T>::Iterative(const Node *root) const
-// {
-//   stack< Node *> stack;
-//   int curr_elem;
-//   int prev_elem = -1;
-//   while(root != NULL || !stack.empty())
-//   {
-//     if(root != nullptr)
-//     {
-//       stack.push(root);
-//       root = root->left;
-//     }
-//     else{
-//       root = stack.top();
-//       curr_elem = root->elem;
-//       if(curr_elem < prev_elem)
-//       {
-//         return false;
-//       }
-//       // curr_one = curr;
-//       prev_elem = curr_elem;
-//       stack.pop();
-//       root = root->right;
-//     }
-//     }
-//     return true;
-//   }
+template <typename T>
+bool BinaryTree<T>::Iterative(const Node *root) const
+{
+  // stack< Node *> S;
+  // Node * curr = root;
+  // int curr_elem;
+  // int prev_elem = -1;
+  // while(curr != NULL || !S.empty())
+  // {
+  //   if(curr != nullptr)
+  //   {
+  //     S.push(root);
+  //     curr = curr->left;
+  //   }
+  //   else{
+  //     curr = S.top();
+  //     curr_elem = root->elem;
+  //     if(curr_elem < prev_elem)
+  //     {
+  //       return false;
+  //     }
+  //     // curr_one = curr;
+  //     prev_elem = curr_elem;
+  //     S.pop();
+  //     curr = curr->right;
+  //   }
+  //   }
+  //   return true;
+  }
 
 
 /**
