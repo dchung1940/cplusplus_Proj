@@ -22,8 +22,12 @@ using namespace cs225;
  * @param tolerance If the current point is too different (difference larger than tolerance) with the start point,
  * it will not be included in this BFS
  */
-BFS::BFS(const PNG & png, const Point & start, double tolerance) {  
+BFS::BFS(const PNG & png, const Point & start, double tolerance) {
   /** @todo [Part 1] */
+  png_file = png;
+  start_ptr = start;
+  limit = tolerance;
+  my_queue.push(start_ptr);
 }
 
 /**
@@ -31,7 +35,8 @@ BFS::BFS(const PNG & png, const Point & start, double tolerance) {
  */
 ImageTraversal::Iterator BFS::begin() {
   /** @todo [Part 1] */
-  return ImageTraversal::Iterator();
+  BFS *beginning = new BFS(png_file,start_ptr,limit);
+  return ImageTraversal::Iterator(*beginning,limit,png_file);
 }
 
 /**
@@ -47,6 +52,8 @@ ImageTraversal::Iterator BFS::end() {
  */
 void BFS::add(const Point & point) {
   /** @todo [Part 1] */
+  my_queue.push(point);
+  std::cout<<"add"<<std::endl;
 }
 
 /**
@@ -54,7 +61,11 @@ void BFS::add(const Point & point) {
  */
 Point BFS::pop() {
   /** @todo [Part 1] */
-  return Point(0, 0);
+  std::cout<<"pop1"<<std::endl;
+  Point temp = my_queue.front();
+  my_queue.pop();
+  std::cout<<"pop2"<<std::endl;
+  return temp;
 }
 
 /**
@@ -62,7 +73,8 @@ Point BFS::pop() {
  */
 Point BFS::peek() const {
   /** @todo [Part 1] */
-  return Point(0, 0);
+  std::cout<<"peek1"<<std::endl;
+  return my_queue.front();
 }
 
 /**
@@ -70,5 +82,5 @@ Point BFS::peek() const {
  */
 bool BFS::empty() const {
   /** @todo [Part 1] */
-  return true;
+  return my_queue.empty();
 }
