@@ -53,7 +53,6 @@ ImageTraversal::Iterator BFS::end() {
 void BFS::add(const Point & point) {
   /** @todo [Part 1] */
   my_queue.push(point);
-  std::cout<<"add"<<std::endl;
 }
 
 /**
@@ -61,10 +60,8 @@ void BFS::add(const Point & point) {
  */
 Point BFS::pop() {
   /** @todo [Part 1] */
-  std::cout<<"pop1"<<std::endl;
   Point temp = my_queue.front();
   my_queue.pop();
-  std::cout<<"pop2"<<std::endl;
   return temp;
 }
 
@@ -73,7 +70,6 @@ Point BFS::pop() {
  */
 Point BFS::peek() const {
   /** @todo [Part 1] */
-  std::cout<<"peek1"<<std::endl;
   return my_queue.front();
 }
 

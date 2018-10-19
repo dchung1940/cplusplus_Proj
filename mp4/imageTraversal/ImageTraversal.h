@@ -7,6 +7,7 @@
 #include "../cs225/HSLAPixel.h"
 #include "../cs225/PNG.h"
 #include "../Point.h"
+#include <vector>
 
 using namespace cs225;
 
@@ -44,7 +45,7 @@ public:
     ImageTraversal * traversal;
     double tolerance;
     PNG picture;
-    bool ** visited;
+    std::vector<Point> visited;
     /** add private members here if neccesary*/
 
   };
