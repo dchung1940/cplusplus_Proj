@@ -226,6 +226,8 @@ class AVLTree
      */
     void getInorderTraversal(const Node* subRoot);
 
+    int Balance(Node* subtree);
+
     /** This variable is used for grading. */
     ostream* _out;
 
