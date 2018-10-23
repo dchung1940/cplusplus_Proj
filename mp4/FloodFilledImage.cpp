@@ -19,7 +19,6 @@ using namespace cs225;
 FloodFilledImage::FloodFilledImage(const PNG & png) {
   /** @todo [Part 2] */
   some_image = png;
-
   // FloodFilledImage FFI =
 }
 
@@ -59,25 +58,26 @@ void FloodFilledImage::addFloodFill(ImageTraversal & traversal, ColorPicker & co
 Animation FloodFilledImage::animate(unsigned frameInterval) const {
   Animation animation;
   /** @todo [Part 2] */
-  animation.addFrame(some_image);
-  for (unsigned i = 0; i<vector_1.size();i++)
-  {
-    ImageTraversal *current_traversal = vector_1.at(i);
-    ColorPicker *current_color = vector_2.at(i);
-    unsigned count = 0;
 
+  for (unsigned i = 0; i < vector_1.size(); i++)
+  {
+    ImageTraversal *current_traversal = vector_1[i];
+    ColorPicker *current_color = vector_2[i];
+    unsigned count = 0;
+    animation.addFrame(some_image);
     for(ImageTraversal::Iterator it = current_traversal->begin(); it != current_traversal->end(); ++it)
     {
       // temp_hsla.h = temp_one.h;
       // temp_hsla.s = temp_one.s;
       // temp_hsla.l = temp_one.l;
+      //std::cout << count << std::endl;
       Point temp = *it;
       HSLAPixel &temp_hsla = some_image.getPixel(temp.x,temp.y);
       temp_hsla = current_color->getColor(temp.x,temp.y);
-      animation.addFrame(some_image);
       count += 1;
       if(count % frameInterval == 0)
       {
+        //std::cout << "ADDED" << std::endl;
         animation.addFrame(some_image);
       }
     }
@@ -85,5 +85,6 @@ Animation FloodFilledImage::animate(unsigned frameInterval) const {
       animation.addFrame(some_image);
 
   }
+
   return animation;
 }

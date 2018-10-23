@@ -42,6 +42,17 @@ ImageTraversal::Iterator::Iterator(ImageTraversal & t, double tolerance_, PNG so
   tolerance = tolerance_;
   traversal = &t;
   picture = some_pic;
+
+  for (unsigned i=0; i<picture.width(); i++)
+  {
+    std::vector<bool>temp;
+    for(unsigned j=0; j<picture.height(); j++)
+    {
+      temp.push_back(false);
+    }
+    visited.push_back(temp);
+  }
+  startPixel = picture.getPixel(current.x,current.y);
 }
 
 /**
@@ -57,19 +68,18 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
     unsigned curr_x = current.x;
     unsigned curr_y = current.y;
 
-    visited.push_back(current);
-    HSLAPixel &h = picture.getPixel(curr_x,curr_y);
+    visited[curr_x][curr_y]= true;
 
     curr_x ++;
     if(curr_x < picture.width())
     {
     HSLAPixel &c = picture.getPixel(curr_x,curr_y);
-    double limit_ = calculateDelta(h,c);
-    Point curr_temp = Point(curr_x,curr_y);
+    double limit_ = calculateDelta(startPixel,c);
+
 
       if(limit_<tolerance)
       {
-        traversal->add(curr_temp);
+        traversal->add(Point(curr_x,curr_y));
       }
     }
     curr_x --;
@@ -80,11 +90,10 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
     if(curr_y < picture.height())
     {
     HSLAPixel &c = picture.getPixel(curr_x,curr_y);
-    double limit_ = calculateDelta(h,c);
-    Point curr_temp = Point(curr_x,curr_y);
+    double limit_ = calculateDelta(startPixel,c);
     if(limit_<tolerance)
     {
-      traversal->add(curr_temp);
+      traversal->add(Point(curr_x,curr_y));
     }
     }
     curr_y --;
@@ -94,11 +103,10 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
     {
     curr_x --;
     HSLAPixel &c = picture.getPixel(curr_x,curr_y);
-    double limit_ = calculateDelta(h,c);
-    Point curr_temp = Point(curr_x,curr_y);
+    double limit_ = calculateDelta(startPixel,c);
     if(limit_<tolerance )
     {
-      traversal->add(curr_temp);
+      traversal->add(Point(curr_x,curr_y));
     }
     curr_x ++;
     }
@@ -109,10 +117,9 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
     {
     curr_y --;
     HSLAPixel &c = picture.getPixel(curr_x,curr_y);
-    double limit_ = calculateDelta(h,c);
-    Point curr_temp = Point(curr_x,curr_y);
+    double limit_ = calculateDelta(startPixel,c);
     if(limit_<tolerance){
-      traversal->add(curr_temp);
+      traversal->add(Point(curr_x,curr_y));
     }
       curr_y ++;
     }
@@ -120,7 +127,7 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
 
     current=traversal->peek();
 
-    while(std::find(visited.begin(),visited.end(),current) != visited.end())
+    while(visited[current.x][current.y])
     {
       traversal->pop();
 

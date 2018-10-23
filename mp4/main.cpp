@@ -20,12 +20,33 @@ int main() {
   // - The code below assumes you have an Animation called `animation`
   // - The code provided below produces the `myFloodFill.png` file you must
   //   submit Part 3 of this assignment -- uncomment it when you're ready.
-  
-  /*
+
+  PNG png;       png.readFromFile("Lebron_James.png");
+
+  // FloodFilledImage image(png);
+  // DFS dfs(png, Point(40, 40), 0.05);
+  // RainbowColorPicker rainbow(0.05);
+  // image.addFloodFill( dfs, rainbow );
+
+  // Animation animation = image.animate(1000);
+  FloodFilledImage image(png);
+  BFS bfs(png, Point(1, 1), 0.01);
+  DFS dfs(png,Point(1,400),.01);
+  MyColorPicker CP3(.5);
+  HSLAPixel color(140, 1, 0.5);
+  SolidColorPicker solid(color);
+  image.addFloodFill(dfs,solid);
+  image.addFloodFill( bfs, CP3 );
+  std::cout<<"part1"<<std::endl;
+
+  Animation animation = image.animate(1000);
+  std::cout<<"part2"<<std::endl;
+
   PNG lastFrame = animation.getFrame( animation.frameCount() - 1 );
   lastFrame.writeToFile("myFloodFill.png");
+  std::cout<<"part3"<<std::endl;
   animation.write("myFloodFill.gif");
-  */
+
 
 
   return 0;

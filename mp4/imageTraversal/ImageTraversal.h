@@ -45,7 +45,8 @@ public:
     ImageTraversal * traversal;
     double tolerance;
     PNG picture;
-    std::vector<Point> visited;
+    std::vector<std::vector<bool>> visited;
+    HSLAPixel startPixel;
     /** add private members here if neccesary*/
 
   };
