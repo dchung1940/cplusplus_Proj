@@ -37,14 +37,14 @@ int main() {
   SolidColorPicker solid(color);
   image.addFloodFill(dfs,solid);
   image.addFloodFill( bfs, CP3 );
-  std::cout<<"part1"<<std::endl;
+  // std::cout<<"part1"<<std::endl;
 
   Animation animation = image.animate(10000);
-  std::cout<<"part2"<<std::endl;
+  // std::cout<<"part2"<<std::endl;
 
   PNG lastFrame = animation.getFrame( animation.frameCount() - 1 );
   lastFrame.writeToFile("myFloodFill.png");
-  std::cout<<"part3"<<std::endl;
+  // std::cout<<"part3"<<std::endl;
   animation.write("myFloodFill.gif");
 
 
