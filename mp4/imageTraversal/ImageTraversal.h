@@ -27,9 +27,12 @@ public:
   /**
    * A forward iterator through an ImageTraversal.
    */
+
+   virtual ~ImageTraversal();
   class Iterator : std::iterator<std::forward_iterator_tag, Point> {
   public:
     Iterator();
+    ~Iterator();
     Iterator(ImageTraversal & t, double tolerance_, PNG some_pic); //put custom constructor
 
     Iterator & operator++();

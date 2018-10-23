@@ -80,3 +80,9 @@ bool BFS::empty() const {
   /** @todo [Part 1] */
   return my_queue.empty();
 }
+
+BFS::~BFS(){
+  /** @todo [Part 1] */
+  /*delete beginning;
+  beginning = nullptr;*/
+}

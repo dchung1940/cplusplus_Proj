@@ -31,6 +31,7 @@ public:
   Point pop();
   Point peek() const;
   bool empty() const;
+  ~DFS();
 
 
 private:

@@ -36,7 +36,7 @@ DFS::DFS(const PNG & png, const Point & start, double tolerance) {
 ImageTraversal::Iterator DFS::begin() {
   /** @todo [Part 1] */
   DFS *beginning = new DFS(png_file, start_ptr,limit);
-  
+
   return ImageTraversal::Iterator(*beginning,limit,png_file);
 }
 
@@ -81,4 +81,10 @@ Point DFS::peek() const {
 bool DFS::empty() const {
   /** @todo [Part 1] */
   return my_stack.empty();
+}
+
+DFS::~DFS(){
+  /** @todo [Part 1] */
+/*  delete beginning;
+  beginning = nullptr;*/
 }

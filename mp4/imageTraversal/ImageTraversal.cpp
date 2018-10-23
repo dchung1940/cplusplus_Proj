@@ -55,6 +55,12 @@ ImageTraversal::Iterator::Iterator(ImageTraversal & t, double tolerance_, PNG so
   startPixel = picture.getPixel(current.x,current.y);
 }
 
+ImageTraversal::~ImageTraversal(){}
+
+ImageTraversal::Iterator::~Iterator(){
+  delete traversal;
+}
+
 /**
  * Iterator increment opreator.
  *
@@ -139,9 +145,11 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
     }
 
     if (traversal->empty()) {
+      delete traversal;
       traversal = nullptr;
     }
   } else {
+    delete traversal;
     traversal = nullptr;
   }
 
