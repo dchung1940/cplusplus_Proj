@@ -57,15 +57,8 @@ ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
     unsigned curr_x = current.x;
     unsigned curr_y = current.y;
 
-
-
     visited.push_back(current);
     HSLAPixel &h = picture.getPixel(curr_x,curr_y);
-
-
-
-
-
 
     curr_x ++;
     if(curr_x < picture.width())
