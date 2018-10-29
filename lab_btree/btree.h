@@ -341,13 +341,51 @@ class BTree
  * the sorted order of elements. If val occurs in elements, then this returns
  * the index of val in elements.
  */
+
+ // template <class T, class C>
+ // unsigned binary_search(const std::vector<T>& lol, unsigned start, unsigned end, const C& some_val);
+
+
 template <class T, class C>
 size_t insertion_idx(const std::vector<T>& elements, const C& val)
 {
-    /* TODO Your code goes here! */
+      for(unsigned i = 0; i < elements.size(); i++) {
+        // std::cout<<i<<std::endl;
+          if(val < elements[i] || val == elements[i]) {
+              return i;
+          }
 
-    return 5;
+       // std::cout<<elements[i]<<std::endl;
+      }
+      unsigned size = elements.size();
+      return size;
+
 }
+
+
+
+// template <class T, class C>
+// unsigned binary_search(const std::vector<T>& lol, unsigned start, unsigned end, const C& some_val)
+// {
+//   std::cout<<start<<"ily"<<end<<std::endl;
+//   if(end >= start)
+//   {
+//     unsigned mid= 1 + (end-start)/2;
+//     if(lol[mid] == some_val)
+//     {
+//       return mid;
+//     }
+//     if(lol[mid] > some_val)
+//     {
+//       return binary_search(lol,start,mid-1,some_val);
+//     }
+//     return binary_search(lol,start+1,end,some_val);
+//   }
+//   else
+//   {
+//     return 1;
+//   }
+// }
 
 #include "btree_given.cpp"
 #include "btree.cpp"
