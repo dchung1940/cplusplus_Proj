@@ -362,30 +362,5 @@ size_t insertion_idx(const std::vector<T>& elements, const C& val)
 
 }
 
-
-
-// template <class T, class C>
-// unsigned binary_search(const std::vector<T>& lol, unsigned start, unsigned end, const C& some_val)
-// {
-//   std::cout<<start<<"ily"<<end<<std::endl;
-//   if(end >= start)
-//   {
-//     unsigned mid= 1 + (end-start)/2;
-//     if(lol[mid] == some_val)
-//     {
-//       return mid;
-//     }
-//     if(lol[mid] > some_val)
-//     {
-//       return binary_search(lol,start,mid-1,some_val);
-//     }
-//     return binary_search(lol,start+1,end,some_val);
-//   }
-//   else
-//   {
-//     return 1;
-//   }
-// }
-
 #include "btree_given.cpp"
 #include "btree.cpp"
