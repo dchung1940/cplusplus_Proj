@@ -245,7 +245,6 @@ class KDTree
 
   private:
 
-    /** Internal representation, root and size **/
     KDTreeNode *root;
     size_t size;
 
@@ -259,6 +258,15 @@ class KDTree
     /**
      * @todo Add your helper functions here.
      */
+    vector<Point<Dim>> tree_vec; // Tree vector
+    //
+    Point<Dim> quickSelect(vector<Point<Dim>> &newPoints, int dim, int l, int r, int m);
+    int partition(vector<Point<Dim>> &newPoints, int dim, int l, int r);
+    void construct(vector<Point<Dim>> &points, KDTreeNode* node, int dim, int l, int r);
+    void Destroy(KDTreeNode* node);
+    Point<Dim> nearest(Point<Dim>& target, KDTreeNode* node, int dim) const;
+    double calcRad(Point<Dim> point1, Point<Dim>point2) const;
+    //bool within(Point<Dim> point1, Point<Dim>point2) const;
 };
 
 #include "kdtree.hpp"
