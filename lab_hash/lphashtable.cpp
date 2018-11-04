@@ -87,8 +87,19 @@ void LPHashTable<K, V>::insert(K const& key, V const& value)
      * Also, don't forget to mark the cell for probing with should_probe!
      */
 
-    (void) key;   // prevent warnings... When you implement this function, remove this line.
-    (void) value; // prevent warnings... When you implement this function, remove this line.
+    //(void) key;   // prevent warnings... When you implement this function, remove this line.
+    //(void) value; // prevent warnings... When you implement this function, remove this line.
+    elems++;
+    if (shouldResize()) {
+      resizeTable();
+    }
+    size_t num = hash(key, this->size);
+    while (table[num]) {
+      num = (num + 1) % this->size;
+    } // find index
+    pair<K,V> *newpair = new pair<K,V> (key, value);
+    table[num] = newpair;
+    should_probe[num] = true;
 }
 
 template <class K, class V>
@@ -97,18 +108,36 @@ void LPHashTable<K, V>::remove(K const& key)
     /**
      * @todo: implement this function
      */
+     int index = findIndex(key);
+     if (index != -1) {
+       delete table[index];
+       table[index] = NULL;
+       elems--;
+     }
 }
 
 template <class K, class V>
 int LPHashTable<K, V>::findIndex(const K& key) const
 {
-    
+
     /**
      * @todo Implement this function
      *
      * Be careful in determining when the key is not in the table!
      */
 
+     size_t num = hash(key, this->size);
+     size_t index = num;
+    while (should_probe[num]) {
+      if (table[num] && table[num]->first == key) {
+        return num;
+      }
+      num = (num + 1) % this->size;
+      if (num == index) {
+        //return -1;
+        break;
+      }
+    }
     return -1;
 }
 
@@ -166,4 +195,27 @@ void LPHashTable<K, V>::resizeTable()
      *
      * @hint Use findPrime()!
      */
+     size_t newSize = findPrime(2 * this->size);
+     delete[] should_probe;
+     should_probe = new bool[newSize];
+     pair<K,V> **table2 = new pair<K,V>*[newSize];
+
+     for (size_t i = 0; i < newSize; i++) {
+       table2[i] = NULL;
+       should_probe[i] = false;
+     }
+
+     for (size_t i = 0; i < this->size; i++) {
+       if (table[i]) {
+         size_t index = hash(table[i]->first, newSize);
+         while (table2[index]) {
+           index = (index + 1) % newSize;
+         }
+         table2[index] = table[i];
+         should_probe[index] = true;
+       }
+     }
+     delete[] table;
+     table = table2;
+     this->size = newSize;
 }

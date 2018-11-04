@@ -8,11 +8,11 @@
  */
 
 #include "schashtable.h"
- 
+
 using hashes::hash;
 using std::list;
 using std::pair;
-  
+
 template <class K, class V>
 SCHashTable<K, V>::SCHashTable(size_t tsize)
 {
@@ -62,6 +62,15 @@ void SCHashTable<K, V>::insert(K const& key, V const& value)
      * @todo Implement this function.
      *
      */
+     elems++;
+     if (shouldResize()) {
+       resizeTable();
+     }
+     size_t num = hash(key, this->size);
+     pair<K,V> newpair(key, value);
+     table[num].push_front(newpair);
+     //should_probe[num] = true;
+
 }
 
 template <class K, class V>
@@ -74,7 +83,20 @@ void SCHashTable<K, V>::remove(K const& key)
      * Please read the note in the lab spec about list iterators and the
      * erase() function on std::list!
      */
-    (void) key; // prevent warnings... When you implement this function, remove this line.
+    //(void) key; // prevent warnings... When you implement this function, remove this line.
+    if (!keyExists(key)) {
+      return;
+    }
+    size_t num = hash(key, this->size);
+    auto start = table[num].begin();
+    auto end = table[num].end();
+    for (it = start; it != end; ++it) {
+      if (it->first == key) {
+        table[num].erase(it);
+        elems--;
+        return;
+      }
+    }
 }
 
 template <class K, class V>
@@ -84,8 +106,16 @@ V SCHashTable<K, V>::find(K const& key) const
     /**
      * @todo: Implement this function.
      */
-
-    return V();
+   typename list<pair<K, V>>::iterator it;
+   size_t num = hash(key, this->size);
+   auto start = table[num].begin();
+   auto end = table[num].end();
+   for (it = start; it != end; ++it) {
+     if (it->first == key) {
+       return it->second;
+     }
+   }
+  return V();
 }
 
 template <class K, class V>
@@ -142,4 +172,18 @@ void SCHashTable<K, V>::resizeTable()
      *
      * @hint Use findPrime()!
      */
+     size_t newSize = findPrime(2 * this->size);
+     list<pair<K,V>> *table2 = new list<pair<K,V>>[newSize];
+     for (size_t i = 0; i < this->size; i++) {
+       auto start = table[i].begin();
+       auto end = table[i].end();
+       for (it = start; it != end; ++it) {
+         size_t num = hash(it->first, newSize);
+         pair<K,V> newPair(it->first, it->second);
+         table2[num].push_front(newPair);
+       }
+     }
+     delete[] table;
+     table = table2;
+     this->size = newSize;
 }
