@@ -23,12 +23,12 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
      */
     MosaicCanvas * curr_image = new MosaicCanvas(theSource.getRows(),theSource.getColumns());
     vector<Point<3>> vect_points;
-    map<Point<3>,TileImage> map_tiles; // dictionary for finding given tileImage
+    map<Point<3>,TileImage*> map_tiles; // dictionary for finding given tileImage
     for(unsigned i=0; i< theTiles.size(); i++)
     {
       Point<3> point = convertToXYZ(theTiles[i].getAverageColor());
       vect_points.push_back(point);
-      map_tiles.insert({point,theTiles[i]});
+      map_tiles.insert({point,&theTiles[i]});
     }
     KDTree<3> kd(vect_points);
     for(int i=0; i<theSource.getRows(); i++)
@@ -37,9 +37,9 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
       {
         Point<3> point = convertToXYZ(theSource.getRegionColor(i,j));
         // kd.findNearestNeighbor(point);
-        TileImage temp_tile = map_tiles[kd.findNearestNeighbor(point)];
-        curr_image->setTile(i,j,&temp_tile);
+        curr_image->setTile(i,j,map_tiles[kd.findNearestNeighbor(point)]);
       }
     }
+
     return curr_image;
 }

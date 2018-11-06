@@ -50,8 +50,8 @@ bool KDTree<Dim>::shouldReplace(const Point<Dim>& target,
      * @todo Implement this function!
      */
      // Variables
-     int distance1 = 0;
-     int distance2 = 0;
+     double distance1 = 0;
+     double distance2 = 0;
 
      for(int i=0; i < Dim; i++) // Add up all the square values
      {
@@ -279,7 +279,7 @@ Point<Dim> KDTree<Dim>::nearest(Point<Dim>& target, KDTreeNode* node, int dim) c
   }
 
   rad = calcRad(closest, target);
-  if((int)node->point[dim] <= (int)target[dim]+rad && (int)node->point[dim] >= (int)target[dim]-rad)
+  if((double)node->point[dim] <= (double)target[dim]+rad && (double)node->point[dim] >= (double)target[dim]-rad)
   {
     within++;
   }
