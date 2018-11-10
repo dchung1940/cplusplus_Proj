@@ -37,7 +37,8 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
       {
         Point<3> point = convertToXYZ(theSource.getRegionColor(i,j));
         // kd.findNearestNeighbor(point);
-        curr_image->setTile(i,j,map_tiles[kd.findNearestNeighbor(point)]);
+        TileImage* temp = map_tiles[kd.findNearestNeighbor(point)];
+        curr_image->setTile(i,j,temp);
       }
     }
 
