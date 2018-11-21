@@ -22,6 +22,8 @@ using std::cout;
 using std::endl;
 using std::feof;
 
+
+using namespace std;
 string remove_punct(const string& str)
 {
     string ret;
@@ -48,12 +50,37 @@ void CommonWords::init_file_word_maps(const vector<string>& filenames)
         // file
         vector<string> words = file_to_vector(filenames[i]);
         /* Your code goes here! */
+        map<std::string, unsigned int> memo;
+        for (size_t i=0; i<words.size(); i++)
+        {
+          // map<std::string, unsigned int>::iterator lookup = memo.find(words[i]);
+          // if (lookup != memo.end())
+              memo[words[i]] += 1;
+          // else
+          //   memo[words[i]] = 1;
+          // cout<<words[i]<<" "<<memo[words[i]]<<endl;
+        }
+        // std::cout<<memo<<std::endl;
+        file_word_maps[i] = memo;
+        //Why is find not necessary? Don't you have to initialize the words that haven't been yet declared?
     }
 }
 
 void CommonWords::init_common()
 {
     /* Your code goes here! */
+    for (size_t i=0; i<file_word_maps.size(); i++)
+    {
+      map<string,unsigned int > m = file_word_maps[i];
+      for(std::pair<const std::string,unsigned int> &key_val : m)
+      {
+        map<std::string, unsigned int>::iterator lookup = common.find(key_val.first);
+        if (lookup != common.end())
+            common[key_val.first] += 1;
+        else
+          common[key_val.first] = 1;
+      }
+    }
 }
 
 /**
@@ -65,8 +92,53 @@ vector<string> CommonWords::get_common_words(unsigned int n) const
 {
     vector<string> out;
     /* Your code goes here! */
+    // for (std::pair<const string,unsigned int> val:common)
+    // {
+    //   if(val.second == file_word_maps.size())
+    //   {
+    //     map<std::string, unsigned int>::iterator lookup;
+    //     for(map<string,unsigned int> num: file_word_maps)
+    //     {
+    //       lookup = num.find(val.first);
+    //       if(lookup->second < n){
+    //         break;
+    //       }
+    //     }
+    //     if(lookup->second >= n){
+    //       // cout<<lookup->second<<endl;
+    //       out.push_back(val.first);
+    //     }
+    //   }
+    // }
+    // return out;
+    // why does it give me const error whenver I try to reference "num" (to &num)????
+    for(std::pair<const string,unsigned int> val:common)
+    {
+      if(val.second == file_word_maps.size()){
+
+        unsigned temp=0;
+
+        for(size_t i =0; i< file_word_maps.size(); i++)
+        {
+          temp = file_word_maps[i].at(val.first);
+          if(temp < n)
+            break;
+        }
+
+        if(temp >= n)
+        {
+          out.push_back(val.first);
+        }
+
+      }
+    }
+
     return out;
-}
+
+
+  }
+
+    // return out;
 
 /**
  * Takes a filename and transforms it to a vector of all words in that file.

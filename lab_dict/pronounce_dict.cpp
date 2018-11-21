@@ -75,5 +75,28 @@ PronounceDict::PronounceDict(const map<string, vector<string>>& pronun_dict)
 bool PronounceDict::homophones(const string& word1, const string& word2) const
 {
     /* Your code goes here! */
-    return true;
+    std::string first = word1;
+    std::string two = word2;
+    std::transform(first.begin(),first.end(),first.begin(),::toupper);
+    std::transform(two.begin(),two.end(),two.begin(),::toupper);
+
+    // std::map<std::string, std::vector<std::string>>::iterator temp_one = dict.find(word1);
+    auto temp_one= dict.find(first);
+    // std::map<std::string, std::vector<std::string>>::iterator temp_two = dict.find(word2
+    auto temp_two= dict.find(two);
+
+    if(temp_one != dict.end())
+    {
+      if(temp_two != dict.end())
+      {
+      if(temp_one->second == temp_two->second)
+      {
+        return true;
+      }
+    }
+    }
+  //   else{
+  //   return false;
+  // }
+  return false;
 }

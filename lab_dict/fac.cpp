@@ -91,7 +91,7 @@ unsigned long memoized_fac(unsigned long n)
     /* Fancy initialization of the static map with an initializer list.
      * Maps 0->0, 1->1. */
     static map<unsigned long, unsigned long> memo = {
-        {0, 1},
+        {0, 1}
     };
 
     map<unsigned long, unsigned long>::iterator lookup = memo.find(n);
