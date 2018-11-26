@@ -1,4 +1,6 @@
 /* Your code here! */
+#pragma once
+
 #include <iostream>
 #include <vector>
 
@@ -7,6 +9,8 @@ using namespace std;
 class DisjointSets
 {
 public:
+  //constructor
+  // DisjointSets::DisjointSets();
   /**
    * Creates n unconnected root nodes at the end of the vector.
    */

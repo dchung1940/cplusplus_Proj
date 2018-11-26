@@ -1,5 +1,5 @@
 
-/**
+
 #include "../cs225/catch/catch.hpp"
 #include <iostream>
 #include <fstream>
@@ -162,6 +162,8 @@ TEST_CASE("testMakeMazeConnected", "[weight=10][part2]")
 	SquareMaze maze;
 	maze.makeMaze(15, 15);
 	assert_maze_connected(maze, 15, 15);
+  std::cout<<"it works"<<std::endl;
+
 }
 
 TEST_CASE("testMakeMazeAcyclic", "[weight=10][part2]")
@@ -349,5 +351,3 @@ TEST_CASE("testDrawSolutionLarge", "[weight=10][part2]")
 	actualOutput->writeToFile("testDrawSolutionLarge"+ string(".png"));
 	REQUIRE(*actualOutput == solnImage);
 }
- */
-

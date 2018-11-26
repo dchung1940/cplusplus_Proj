@@ -7,6 +7,11 @@ using namespace std;
 /**
  * Parameters: num	The number of nodes to create
  */
+// DisjointSets::DisjointSets()
+// {
+//
+// }
+
 void DisjointSets::addelements(int num)
 {
   for(int i=0; i < num; i++)
