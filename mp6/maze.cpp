@@ -2,9 +2,10 @@
 #include "maze.h"
 
 SquareMaze::SquareMaze(){
-  maze_squares = DisjointSets();
   width_ = 0;
   height_ = 0;
+  // srand(time(NULL));
+
 }
 
 void SquareMaze::makeMaze(int width,int height){
@@ -355,3 +356,46 @@ for(auto itr = path_finder.begin(); itr<path_finder.end(); itr++)
 return image;
 
 }
+
+// PNG SquareMaze::drawCreativeMaze(PNG image) const{
+// int new_width = image.width();
+// int new_height = image.height();
+//   for (int j=0; j<new_height; j++)
+//   {
+//     // image->getPixel(0,j)->h = 0;
+//     // image->getPixel(0,j)->s = 0;
+//     image.getPixel(0,j).l = 1;
+//     // image->getPixel(0,j)->a = 0;
+//   }
+//   for (int i=10; i<new_width; i++){
+//     image.getPixel(i,0).l = 1;
+//   }
+//   for (int x=0; x<width_; x++)
+//   {
+//     for(int y=0; y<height_; y++)
+//     {
+//       int curr_index = y*width_+x;
+//       if(setWall_right[curr_index])
+//       {
+//         int new_x = (x+1)*10;
+//         for(int k=0; k<=10; k++)
+//         {
+//           int new_y = (y*10)+k;
+//           image.getPixel(new_x,new_y).l = 1;
+//         }
+//       }
+//
+//       if(setWall_down[curr_index])
+//       {
+//         int new_y = (y+1)*10;
+//         for(int k=0; k<=10; k++)
+//         {
+//           int new_x = x*10+k;
+//           image.getPixel(new_x,new_y).l = 1;
+//         }
+//       }
+//     }
+//   }
+//   return image;
+//
+// }

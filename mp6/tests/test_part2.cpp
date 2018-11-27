@@ -162,7 +162,7 @@ TEST_CASE("testMakeMazeConnected", "[weight=10][part2]")
 	SquareMaze maze;
 	maze.makeMaze(15, 15);
 	assert_maze_connected(maze, 15, 15);
-  std::cout<<"it works"<<std::endl;
+  // std::cout<<"it works"<<std::endl;
 
 }
 

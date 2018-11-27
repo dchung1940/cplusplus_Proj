@@ -35,6 +35,8 @@ public:
   //This function calls drawMaze, then solveMaze;
   //it modifies the PNG from drawMaze to show the solution vector and the exit.
   PNG * drawMazeWithSolution();
+  //creates a creative maze
+  // PNG drawCreativeMaze(PNG image) const;
 private:
   DisjointSets maze_squares;
   int width_;
