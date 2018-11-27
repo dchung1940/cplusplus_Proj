@@ -357,45 +357,61 @@ return image;
 
 }
 
-// PNG SquareMaze::drawCreativeMaze(PNG image) const{
-// int new_width = image.width();
-// int new_height = image.height();
-//   for (int j=0; j<new_height; j++)
+PNG SquareMaze::drawCreativeMaze(PNG image) const{
+  PNG image_ = image;
+  std::cout<< image.width()<<std::endl;
+  std::cout<<image.height()<<std::endl;
+int new_width = width_*10+1;
+int new_height = height_*10+1;
+// for (unsigned i=0; i<image_.width(); i++)
+// {
+//   for(unsigned j = 0; j<image_.height(); j++)
 //   {
-//     // image->getPixel(0,j)->h = 0;
-//     // image->getPixel(0,j)->s = 0;
-//     image.getPixel(0,j).l = 1;
-//     // image->getPixel(0,j)->a = 0;
+//     image_.getPixel(i,j).l = .5;
 //   }
-//   for (int i=10; i<new_width; i++){
-//     image.getPixel(i,0).l = 1;
-//   }
-//   for (int x=0; x<width_; x++)
-//   {
-//     for(int y=0; y<height_; y++)
-//     {
-//       int curr_index = y*width_+x;
-//       if(setWall_right[curr_index])
-//       {
-//         int new_x = (x+1)*10;
-//         for(int k=0; k<=10; k++)
-//         {
-//           int new_y = (y*10)+k;
-//           image.getPixel(new_x,new_y).l = 1;
-//         }
-//       }
-//
-//       if(setWall_down[curr_index])
-//       {
-//         int new_y = (y+1)*10;
-//         for(int k=0; k<=10; k++)
-//         {
-//           int new_x = x*10+k;
-//           image.getPixel(new_x,new_y).l = 1;
-//         }
-//       }
-//     }
-//   }
-//   return image;
-//
 // }
+  for (int j=100; j<new_height+100; j++)
+  {
+    // image_.getPixel(100,j).h = 0;
+    // image_.getPixel(100,j).s = 1;
+    image_.getPixel(100,j).l = 1;
+    // image_.getPixel(100,j).a = 1;
+  }
+  for (int i=100+10; i<new_width+100; i++){
+    image_.getPixel(i,100).l = 1;
+  }
+  for (int x=0; x<width_; x++)
+  {
+    for(int y=0; y<height_; y++)
+    {
+      int curr_index = y*width_+x;
+      if(setWall_right[curr_index])
+      {
+        int new_x = (x+1)*10+100;
+        for(int k=0; k<=10; k++)
+        {
+          int new_y = (y*10)+k+100;
+          image_.getPixel(new_x,new_y).h = 180;
+          image_.getPixel(new_x,new_y).s = 1;
+          image_.getPixel(new_x,new_y).l = .5;
+          image_.getPixel(new_x,new_y).a = 1;
+        }
+      }
+
+      if(setWall_down[curr_index])
+      {
+        int new_y = (y+1)*10+100;
+        for(int k=0; k<=10; k++)
+        {
+          int new_x = x*10+k+100;
+          image_.getPixel(new_x,new_y).h = 120;
+          image_.getPixel(new_x,new_y).s = 1;
+          image_.getPixel(new_x,new_y).l = .5;
+          image_.getPixel(new_x,new_y).a = 1;
+        }
+      }
+    }
+  }
+  return image_;
+
+}
