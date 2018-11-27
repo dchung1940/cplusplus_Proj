@@ -359,8 +359,8 @@ return image;
 
 PNG SquareMaze::drawCreativeMaze(PNG image) const{
   PNG image_ = image;
-  std::cout<< image.width()<<std::endl;
-  std::cout<<image.height()<<std::endl;
+  // std::cout<< image.width()<<std::endl;
+  // std::cout<<image.height()<<std::endl;
 int new_width = width_*10+1;
 int new_height = height_*10+1;
 // for (unsigned i=0; i<image_.width(); i++)
@@ -372,13 +372,19 @@ int new_height = height_*10+1;
 // }
   for (int j=100; j<new_height+100; j++)
   {
-    // image_.getPixel(100,j).h = 0;
-    // image_.getPixel(100,j).s = 1;
-    image_.getPixel(100,j).l = 1;
-    // image_.getPixel(100,j).a = 1;
+    image_.getPixel(100,j).h = 180;
+    image_.getPixel(100,j).s = 1;
+    image_.getPixel(100,j).l = .5;
+    image_.getPixel(100,j).a = 1;
+
   }
   for (int i=100+10; i<new_width+100; i++){
-    image_.getPixel(i,100).l = 1;
+    // image_.getPixel(i,100).l = 1;
+
+    image_.getPixel(i,100).h = 120;
+    image_.getPixel(i,100).s = 1;
+    image_.getPixel(i,100).l = .5;
+    image_.getPixel(i,100).a = 1;
   }
   for (int x=0; x<width_; x++)
   {
