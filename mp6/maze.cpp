@@ -411,6 +411,11 @@ PNG* SquareMaze::drawCreativeMaze() const{
         for(int j=0; j<=80; j++)
         image->getPixel(new_width-81+i,0+j).l = 0;
       }
+      for(int i=0; i<=80; i++)
+          {
+            for(int j=0; j<=80; j++)
+            image->getPixel(0+i,new_height-81+j).l = 0;
+          }
 
   return image;
 
