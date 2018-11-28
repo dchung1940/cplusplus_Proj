@@ -36,14 +36,21 @@ public:
   //it modifies the PNG from drawMaze to show the solution vector and the exit.
   PNG * drawMazeWithSolution();
   //creates a creative maze
-  PNG drawCreativeMaze(PNG image) const;
+  // void makeCreativeMaze(int width, int height);
+  PNG *drawCreativeMaze() const;
+  PNG *drawCreativeMazeSolution() const;
+
 private:
   DisjointSets maze_squares;
+  // DisjointSets creative_maze;
   int width_;
   int height_;
+
+  // vector<int> cells;
   vector<vector<int>> edges;
   vector<bool> setWall_right;
   vector<bool> setWall_down;
   vector<int> path_finder;
+  vector<int> path_finder_creative;
 
 };

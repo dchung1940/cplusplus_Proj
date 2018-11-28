@@ -224,6 +224,7 @@ cell_stack.pop();
 while(!cell_stack.empty())
 {
   int temp_2 = cell_stack.top();
+  // cells.push_back(temp_2);
   cell_stack.pop();
   if(temp_2-temp_1 == 1)
     path_finder.push_back(0);
@@ -235,6 +236,8 @@ while(!cell_stack.empty())
     path_finder.push_back(3);
 
   temp_1 = temp_2;
+
+
 }
 
 return path_finder;
@@ -344,6 +347,7 @@ for(auto itr = path_finder.begin(); itr<path_finder.end(); itr++)
     curr_y -= 10;
   }
 }
+
   curr_x -=5;
   curr_y +=5;
 
@@ -353,38 +357,28 @@ for(auto itr = path_finder.begin(); itr<path_finder.end(); itr++)
     image->getPixel(curr_x+i,curr_y).l = 1;
     image->getPixel(curr_x+i,curr_y).a = 1;
   }
+
+
 return image;
 
 }
 
-PNG SquareMaze::drawCreativeMaze(PNG image) const{
-  PNG image_ = image;
-  // std::cout<< image.width()<<std::endl;
-  // std::cout<<image.height()<<std::endl;
-int new_width = width_*10+1;
-int new_height = height_*10+1;
-// for (unsigned i=0; i<image_.width(); i++)
-// {
-//   for(unsigned j = 0; j<image_.height(); j++)
-//   {
-//     image_.getPixel(i,j).l = .5;
-//   }
-// }
-  for (int j=100; j<new_height+100; j++)
+
+
+
+PNG* SquareMaze::drawCreativeMaze() const{
+  int new_width = width_*10+1;
+  int new_height = height_*10+1;
+  PNG* image = new PNG(new_width,new_height);
+  for (int j=0; j<new_height; j++)
   {
-    image_.getPixel(100,j).h = 180;
-    image_.getPixel(100,j).s = 1;
-    image_.getPixel(100,j).l = .5;
-    image_.getPixel(100,j).a = 1;
-
+    // image->getPixel(0,j)->h = 0;
+    // image->getPixel(0,j)->s = 0;
+    image->getPixel(0,j).l = 0;
+    // image->getPixel(0,j)->a = 0;
   }
-  for (int i=100+10; i<new_width+100; i++){
-    // image_.getPixel(i,100).l = 1;
-
-    image_.getPixel(i,100).h = 120;
-    image_.getPixel(i,100).s = 1;
-    image_.getPixel(i,100).l = .5;
-    image_.getPixel(i,100).a = 1;
+  for (int i=10; i<new_width; i++){
+    image->getPixel(i,0).l = 0;
   }
   for (int x=0; x<width_; x++)
   {
@@ -393,31 +387,109 @@ int new_height = height_*10+1;
       int curr_index = y*width_+x;
       if(setWall_right[curr_index])
       {
-        int new_x = (x+1)*10+100;
+        int new_x = (x+1)*10;
         for(int k=0; k<=10; k++)
         {
-          int new_y = (y*10)+k+100;
-          image_.getPixel(new_x,new_y).h = 180;
-          image_.getPixel(new_x,new_y).s = 1;
-          image_.getPixel(new_x,new_y).l = .5;
-          image_.getPixel(new_x,new_y).a = 1;
+          int new_y = (y*10)+k;
+          image->getPixel(new_x,new_y).l = 0;
         }
       }
 
       if(setWall_down[curr_index])
       {
-        int new_y = (y+1)*10+100;
+        int new_y = (y+1)*10;
         for(int k=0; k<=10; k++)
         {
-          int new_x = x*10+k+100;
-          image_.getPixel(new_x,new_y).h = 120;
-          image_.getPixel(new_x,new_y).s = 1;
-          image_.getPixel(new_x,new_y).l = .5;
-          image_.getPixel(new_x,new_y).a = 1;
+          int new_x = x*10+k;
+          image->getPixel(new_x,new_y).l = 0;
         }
       }
     }
   }
-  return image_;
+  for(int i=0; i<=80; i++)
+      {
+        for(int j=0; j<=80; j++)
+        image->getPixel(new_width-81+i,0+j).l = 0;
+      }
+
+  return image;
+
+
+
+
 
 }
+
+PNG *SquareMaze::drawCreativeMazeSolution() const{
+  PNG * image = drawCreativeMaze();
+  int curr_x = 5;
+  int curr_y = 5;
+  for(auto itr = path_finder.begin(); itr<path_finder.end(); itr++)
+  {
+    // std::cout<<*itr<<std::endl;
+    if(*itr == 0)
+    {
+      for(int i=0; i<=10; i++)
+      {
+      image->getPixel(curr_x+i,curr_y).h = 0;
+      image->getPixel(curr_x+i,curr_y).s = 1;
+      image->getPixel(curr_x+i,curr_y).l = 0.5;
+      image->getPixel(curr_x+i,curr_y).a = 1;
+      // std::cout<<curr_x+i<<","<<curr_y<<std::endl;
+      }
+
+      curr_x += 10;
+    }
+    else if (*itr == 1)
+    {
+      for(int i=0; i<=10; i++)
+      {
+      image->getPixel(curr_x,curr_y+i).h = 0;
+      image->getPixel(curr_x,curr_y+i).s = 1;
+      image->getPixel(curr_x,curr_y+i).l = 0.5;
+      image->getPixel(curr_x,curr_y+i).a = 1;
+      // std::cout<<curr_x<<","<<curr_y+i<<std::endl;
+      }
+      curr_y += 10;
+    }
+    else if (*itr == 2)
+    {
+      for(int i=0; i<=10; i++)
+      {
+      image->getPixel(curr_x-i,curr_y).h = 0;
+      image->getPixel(curr_x-i,curr_y).s = 1;
+      image->getPixel(curr_x-i,curr_y).l = 0.5;
+      image->getPixel(curr_x-i,curr_y).a = 1;
+      // std::cout<<curr_x-i<<","<<curr_y<<std::endl;
+      }
+      curr_x -= 10;
+    }
+    else if (*itr == 3)
+    {
+      for(int i=0; i<=10; i++)
+      {
+      image->getPixel(curr_x,curr_y-i).h = 0;
+      image->getPixel(curr_x,curr_y-i).s = 1;
+      image->getPixel(curr_x,curr_y-i).l = 0.5;
+      image->getPixel(curr_x,curr_y-i).a = 1;
+      // std::cout<<curr_x<<","<<curr_y-i<<std::endl;
+
+      }
+      curr_y -= 10;
+    }
+  }
+
+    curr_x -=5;
+    curr_y +=5;
+
+    for (int i =1; i<=9; i++){
+      image->getPixel(curr_x+i,curr_y).h = 1;
+      image->getPixel(curr_x+i,curr_y).s = 1;
+      image->getPixel(curr_x+i,curr_y).l = 1;
+      image->getPixel(curr_x+i,curr_y).a = 1;
+    }
+
+
+  return image;
+}
+// }

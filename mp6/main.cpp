@@ -10,10 +10,19 @@ int main()
     // Write your own main here
     SquareMaze m;
     m.makeMaze(88,52);
-    PNG png;
-    png.readFromFile("background.png");
-    PNG creative = m.drawCreativeMaze(png);
-    creative.writeToFile("creative.png");
+    // PNG png;
+    // png.readFromFile("background.png");
+    PNG *creative = m.drawCreativeMaze();
+    creative->writeToFile("creative.png");
+    delete creative;
+
+    std::vector<int> sol = m.solveMaze();
+    std::cout << "solveMaze complete" << std::endl;
+
+    PNG* solved = m.drawCreativeMazeSolution();
+    solved->writeToFile("creative_solution.png");
+    delete solved;
+
     // delete creative;
     std::cout << "make Creative.png complete" << std::endl;
 
