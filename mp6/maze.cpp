@@ -249,6 +249,7 @@ PNG * SquareMaze::drawMaze() const{
 int new_width = width_*10+1;
 int new_height = height_*10+1;
 PNG* image = new PNG(new_width,new_height);
+// zero = 1;
 for (int j=0; j<new_height; j++)
 {
   // image->getPixel(0,j)->h = 0;

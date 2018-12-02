@@ -26,6 +26,27 @@
  */
 NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
     /* Your code goes here! */
+    for(unsigned i=0; i<startingTokens; i++)
+    {
+      g_.insertVertex("p1-"+std::to_string(i));
+      g_.insertVertex("p2-"+std::to_string(i));
+    }
+    for(unsigned i=startingTokens; i>0; i--)
+    {
+      g_.insertEdge("p1-"+std::to_string(i),"p2-"+std::to_string(i-1));
+      g_.setEdgeWeight("p1-"+std::to_string(i),"p2-"+std::to_string(i-1),0);
+      g_.insertEdge("p2-"+std::to_string(i),"p1-"+std::to_string(i-1));
+      g_.setEdgeWeight("p2-"+std::to_string(i),"p1-"+std::to_string(i-1),0);
+
+    }
+    for(unsigned i=startingTokens; i>1; i--)
+    {
+      g_.insertEdge("p1-"+std::to_string(i),"p2-"+std::to_string(i-2));
+      g_.setEdgeWeight("p1-"+std::to_string(i),"p2-"+std::to_string(i-2),0);
+      g_.insertEdge("p2-"+std::to_string(i),"p1-"+std::to_string(i-2));
+      g_.setEdgeWeight("p2-"+std::to_string(i),"p1-"+std::to_string(i-2),0);
+    }
+    startingVertex_ = "p1-"+std::to_string(startingTokens);
 }
 
 /**
@@ -40,6 +61,39 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
 std::vector<Edge> NimLearner::playRandomGame() const {
   vector<Edge> path;
  /* Your code goes here! */
+ int i = g_.getVertices().size()/2-1;
+ // std::cout<<i<<std::endl;
+ int flag = 0;
+ Vertex current_vertex = startingVertex_;
+ // std::cout<<startingVertex_<<std::endl;
+ // std::cout<<rand()%2 +1<<std::endl;
+
+ while(i !=1 && i!=0)
+ {
+  int rand_num = rand()%2 +1;
+  // std::cout<<"rand"<<rand_num<<std::endl;
+  i-=rand_num;
+  // std::cout<<i<<std::endl;
+  if(flag ==0)
+  {
+    path.push_back(g_.getEdge(current_vertex,"p2-"+std::to_string(i)));
+    flag =1;
+    current_vertex = "p2-"+std::to_string(i);
+  }
+  else
+  {
+    path.push_back(g_.getEdge(current_vertex,"p1-"+std::to_string(i)));
+    flag =0;
+    current_vertex = "p1-"+std::to_string(i);
+  }
+ }
+ if(i == 1)
+ {
+  if(flag ==0)
+    path.push_back(g_.getEdge(current_vertex,"p2-0"));
+  else
+    path.push_back(g_.getEdge(current_vertex,"p1-0"));
+  }
   return path;
 }
 
@@ -61,6 +115,59 @@ std::vector<Edge> NimLearner::playRandomGame() const {
  */
 void NimLearner::updateEdgeWeights(const std::vector<Edge> & path) {
  /* Your code goes here! */
+
+   if(path.back().dest == "p1-0")
+   {
+     // std::cout<<"1"<<std::endl;
+     unsigned index = 0;
+     int flag = 0;
+     while(index <path.size())
+     {
+       Edge temp = path.at(index);
+       if(flag == 0)
+       {
+        g_.setEdgeWeight(temp.source,temp.dest,g_.getEdgeWeight(temp.source, temp.dest)-1);
+        flag = 1;
+      }
+      else
+      {
+        g_.setEdgeWeight(temp.source,temp.dest,g_.getEdgeWeight(temp.source, temp.dest)+1);
+        flag =0;
+      }
+      index ++;
+     }
+   }
+   else if(path.back().dest == "p2-0")
+   {
+     // std::cout<<"2"<<std::endl;
+     unsigned index = 0;
+     int flag = 0;
+
+     while(index < path.size())
+     {
+       Edge temp = path.at(index);
+       if(flag == 0)
+       {
+        // std::cout<<g_.getEdgeWeight(temp.source, temp.dest)<<std::endl;
+        g_.setEdgeWeight(temp.source,temp.dest,g_.getEdgeWeight(temp.source, temp.dest)+1);
+        // std::cout<<g_.getEdgeWeight(temp.source, temp.dest)<<std::endl;
+
+        flag = 1;
+      }
+      else
+      {
+        // std::cout<<g_.getEdgeWeight(temp.source, temp.dest)<<std::endl;
+        g_.setEdgeWeight(temp.source,temp.dest,g_.getEdgeWeight(temp.source, temp.dest)-1);
+        // std::cout<<g_.getEdgeWeight(temp.source, temp.dest)<<std::endl;
+
+        flag =0;
+      }
+      index ++;
+     }
+   }
+
+
+
 }
 
 /**

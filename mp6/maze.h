@@ -52,5 +52,6 @@ private:
   vector<bool> setWall_down;
   vector<int> path_finder;
   vector<int> path_finder_creative;
+  int zero =0;
 
 };
