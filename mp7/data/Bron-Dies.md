@@ -1,0 +1,1 @@
+The once famous reputation of him was nowhere to be seen. He was simply a street beggar you can commonly see on the streets. He had no hopes. Simply nothing. He gets hit by the car, and suffers a poor death.

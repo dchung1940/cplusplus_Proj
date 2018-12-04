@@ -1,0 +1,1 @@
+Despite his uniqueness, nobody was willing to give a good beat for Josh to show his potential. Realizing that he's going to become a beggar if he keep insisting on becoming a rapper, he decides to work at a restaurant. There, he marries, and lived a life similar to other ordinary people

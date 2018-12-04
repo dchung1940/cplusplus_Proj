@@ -1,0 +1,1 @@
+He was making lots of money from his job, and later met his wife through work. Everything was going his way. He thanked LeBron in his head for giving him motivation to work hard and become who he is today. He lived a happy life, and influenced the society by a great deal with his contribution to developing virtual food machine in Google.
