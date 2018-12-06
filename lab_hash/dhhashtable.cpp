@@ -92,17 +92,22 @@ void DHHashTable<K, V>::insert(K const& key, V const& value)
 //     (void) key;   // prevent warnings... When you implement this function, remove this line.
 //     (void) value; // prevent warnings... When you implement this function, remove this line.
 //
-    elems++;
-    if (shouldResize()) {
+    elems ++;
+    if(shouldResize())
+    {
       resizeTable();
     }
-    size_t num = hash(key, this->size);
-    while (table[num]) {
-      num = (num + 1) % this->size;
-    } // find index
-    pair<K,V> *newpair = new pair<K,V> (key, value);
-    table[num] = newpair;
-    should_probe[num] = true;
+    pair<K,V> *temp = new pair<K,V>(key,value);
+    size_t val_= hash(key,size);
+    int i = 0;
+    while(table[val_]!=nullptr)
+    {
+      i++;
+      val_ = (hash(key,size)+i*secondary_hash(key,size))%size;
+    }
+    should_probe[val_] = true;
+    table[val_] = temp;
+
 }
 
 template <class K, class V>
@@ -111,12 +116,13 @@ void DHHashTable<K, V>::remove(K const& key)
     /**
      * @todo Implement this function
      */
-     int index = findIndex(key);
-     if (index != -1) {
-       delete table[index];
-       table[index] = NULL;
-       elems--;
-     }
+     if(findIndex(key) == -1)
+      return;
+    int temp = findIndex(key);
+    delete table[temp];
+    table[temp] = nullptr;
+    elems --;
+
 }
 
 template <class K, class V>
@@ -125,19 +131,13 @@ int DHHashTable<K, V>::findIndex(const K& key) const
     /**
      * @todo Implement this function
      */
-     size_t num = hash(key, this->size);
-     size_t start = num;
-    while (should_probe[num]) {
-      if (table[num] != NULL && table[num]->first == key) {
-        return num;
-      }
-      num = (num + 1) % this->size;
-      if (num == start) {
-        //return -1;
-        break;
-      }
-    }
-    return -1;
+     for(unsigned i = 0; i < this->size; i++){
+   if(table[i] != nullptr){
+     if(table[i]->first == key)
+       return i;
+   }
+ }
+ return -1;
 }
 
 template <class K, class V>
@@ -184,33 +184,37 @@ void DHHashTable<K, V>::clear()
 template <class K, class V>
 void DHHashTable<K, V>::resizeTable()
 {
-    size_t newSize = findPrime(size * 2);
-    pair<K, V>** temp = new pair<K, V>*[newSize];
-    delete[] should_probe;
-    should_probe = new bool[newSize];
-    for (size_t i = 0; i < newSize; i++) {
-        temp[i] = NULL;
-        should_probe[i] = false;
-    }
+  size_t new_size = findPrime(size*2);
+  pair<K,V>** temp_1 = new pair<K,V>*[new_size];
+  delete [] should_probe;
+  should_probe = new bool[new_size];
+  for(unsigned i=0; i<new_size; i++)
+  {
+    should_probe[i] = false;
+    temp_1[i] = nullptr;
+  }
 
-    for (size_t slot = 0; slot < size; slot++) {
-        if (table[slot] != NULL) {
-            size_t h = hash(table[slot]->first, newSize);
-            size_t jump = secondary_hash(table[slot]->first, newSize);
-            size_t i = 0;
-            size_t idx = h;
-            while (temp[idx] != NULL)
-            {
-                ++i;
-                idx = (h + jump*i) % newSize;
-            }
-            temp[idx] = table[slot];
-            should_probe[idx] = true;
-        }
+  for(unsigned i = 0; i<size; i++)
+  {
+    if(table[i] != nullptr)
+    {
+    size_t new_hash = hash(table[i]->first,new_size);
+    size_t new_hash_two = secondary_hash(table[i]->first,new_size);
+    size_t a = 0;
+    size_t idx = new_hash;
+    while(temp_1[idx] != nullptr)
+    {
+      a += 1;
+      idx = (new_hash + new_hash_two*a)%new_size;
     }
+    temp_1[idx] = table[i];
+    should_probe[idx] = true;
+  }
+  }
+  delete [] table;
 
-    delete[] table;
-    // don't delete elements since we just moved their pointers around
-    table = temp;
-    size = newSize;
+  table = temp_1;
+  size = new_size;
+
+
 }

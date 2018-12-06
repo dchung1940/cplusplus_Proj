@@ -73,14 +73,15 @@ template <class T, class Compare>
 void heap<T, Compare>::heapifyDown(size_t currentIdx)
 {
     // @TODO Implement the heapifyDown algorithm.
-    if(hasAChild(currentIdx)){
-    size_t minChildIndex = maxPriorityChild(currentIdx);
-    if(_elems[currentIdx] > _elems[minChildIndex])
+    if(hasAChild(currentIdx))
     {
-        std::swap(_elems[currentIdx], _elems[minChildIndex]);
-        heapifyDown(minChildIndex);
+      size_t temp = maxPriorityChild(currentIdx);
+      if(_elems[temp]<_elems[currentIdx])
+      {
+        std::swap(_elems[temp],_elems[currentIdx]);
+        heapifyDown(temp);
+      }
     }
-  }
 }
 
 // template<class T>
@@ -94,13 +95,15 @@ void heap<T, Compare>::heapifyDown(size_t currentIdx)
 template <class T, class Compare>
 void heap<T, Compare>::heapifyUp(size_t currentIdx)
 {
-    if (currentIdx == root())
-        return;
-    size_t parentIdx = parent(currentIdx);
-    if (higherPriority(_elems[currentIdx], _elems[parentIdx])) {
-        std::swap(_elems[currentIdx], _elems[parentIdx]);
-        heapifyUp(parentIdx);
+  if(currentIdx != 1)
+  {
+    size_t parent_ = parent(currentIdx);
+    if(_elems[parent_] > _elems[currentIdx])
+    {
+      std::swap(_elems[parent_],_elems[currentIdx]);
+      heapifyUp(parent_);
     }
+  }
 }
 
 template <class T, class Compare>
