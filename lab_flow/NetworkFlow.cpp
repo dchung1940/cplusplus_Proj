@@ -24,11 +24,11 @@ NetworkFlow::NetworkFlow(Graph & startingGraph, Vertex source, Vertex sink) :
   // YOUR CODE HERE
   vector<Vertex> temp = g_.getVertices();
   vector<Edge> temp_one = g_.getEdges();
-  // for (auto it = temp.begin(); it != temp.end(); ++it)
-  // {
-  //   residual_.insertVertex(*it);
-  //   flow_.insertVertex(*it);
-  // }
+  for (auto it = temp.begin(); it != temp.end(); ++it)
+  {
+    residual_.insertVertex(*it);
+    flow_.insertVertex(*it);
+  }
   for(auto it = temp_one.begin(); it!= temp_one.end(); ++it)
   {
     int weight_ = (*it).getWeight();
