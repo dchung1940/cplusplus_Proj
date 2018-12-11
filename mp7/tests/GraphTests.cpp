@@ -11,7 +11,7 @@ Graph<Vertex, Edge> createTestGraph() {
         /  | _/           |
       a -- c -- e    f -- g
         \_   _/
-           d 
+           d
   */
 
   Graph<Vertex, Edge> g;
@@ -58,7 +58,7 @@ TEST_CASE("Graph::size returns the vertex count", "[weight=1]") {
   Graph<Vertex, Edge> g;
 
   g.insertVertex("a");
-  g.insertVertex("b");  
+  g.insertVertex("b");
   REQUIRE( g.size() == 2 );
 
   g.insertVertex("c");
@@ -71,7 +71,7 @@ TEST_CASE("Graph::edges::size returns the edge count", "[weight=1]") {
   Graph<Vertex, Edge> g;
 
   g.insertVertex("a");
-  g.insertVertex("b");  
+  g.insertVertex("b");
   g.insertVertex("c");
   g.insertVertex("d");
   g.insertVertex("e");
@@ -115,5 +115,62 @@ TEST_CASE("Graph::isAdjacent is correct (opposite-order test)", "[weight=1]") {
   Graph<Vertex, Edge> g = createTestGraph();
   REQUIRE( g.isAdjacent("a", "d") == true );
 }
+TEST_CASE("Graph::removeVertex", "[weight=1]") {
+  Graph<Vertex, Edge> g = createTestGraph();
+  REQUIRE( g.incidentEdges("b").size() == 2 );
+  REQUIRE( g.incidentEdges("c").size() == 4 );
+  REQUIRE( g.incidentEdges("d").size() == 2 );
+//  REQUIRE( g.adjListSize() == 8);
+  g.removeVertex("a");
+  REQUIRE( g.edges() == 6 );
+  REQUIRE( g.size() == 7 );
+  REQUIRE( g.incidentEdges("b").size() == 1 );
+  REQUIRE( g.incidentEdges("c").size() == 3 );
+  REQUIRE( g.incidentEdges("d").size() == 1 );
+//  REQUIRE( g.adjListSize() == 7);
+}
 
+TEST_CASE("Graph::removeVertex, multiple", "[weight=1]") {
+  Graph<Vertex, Edge> g = createTestGraph();
+  REQUIRE( g.incidentEdges("b").size() == 2 );
+  REQUIRE( g.incidentEdges("c").size() == 4 );
+  REQUIRE( g.incidentEdges("d").size() == 2 );
+//  REQUIRE( g.adjListSize() == 8);
+  g.removeVertex("a");
+  REQUIRE( g.edges() == 6 );
+  REQUIRE( g.size() == 7 );
+  REQUIRE( g.incidentEdges("b").size() == 1 );
+  REQUIRE( g.incidentEdges("c").size() == 3 );
+  REQUIRE( g.incidentEdges("d").size() == 1 );
+//  REQUIRE( g.adjListSize() == 7);
+  g.removeVertex("h");
+  REQUIRE( g.edges() == 4 );
+  REQUIRE( g.size() == 6 );
+  REQUIRE( g.incidentEdges("c").size() == 2 );
+  REQUIRE( g.incidentEdges("g").size() == 1 );
+//  REQUIRE( g.adjListSize() == 6);
+}
 
+TEST_CASE("Graph::removeEdge with keys", "[weight=1]") {
+  Graph<Vertex, Edge> g = createTestGraph();
+  g.removeEdge("a", "b");
+  REQUIRE( g.incidentEdges("a").size() == 2 );
+  REQUIRE( g.incidentEdges("b").size() == 1 );
+  REQUIRE( g.size() == 8 );
+  REQUIRE( g.edges() == 8 );
+}
+
+TEST_CASE("Graph::removeEdge with keys, multiple", "[weight=1]") {
+  Graph<Vertex, Edge> g = createTestGraph();
+  g.removeEdge("a", "b");
+  REQUIRE( g.incidentEdges("a").size() == 2 );
+  REQUIRE( g.incidentEdges("b").size() == 1 );
+  REQUIRE( g.size() == 8 );
+  REQUIRE( g.edges() == 8 );
+
+  g.removeEdge("a", "d");
+  REQUIRE( g.incidentEdges("a").size() == 1 );
+  REQUIRE( g.incidentEdges("d").size() == 1 );
+  REQUIRE( g.size() == 8 );
+  REQUIRE( g.edges() == 7 );
+}
