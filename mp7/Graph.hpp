@@ -199,6 +199,7 @@ bool Graph<V,E>::isAdjacent(const std::string key1, const std::string key2) cons
     vert_1 = key1;
     vert_2 = key2;
   }
+  
   std::list<edgeListIter> edge_1 = adjList.at(vert_1);
   for(auto it = edge_1.begin(); it != edge_1.end(); ++it)
   {
